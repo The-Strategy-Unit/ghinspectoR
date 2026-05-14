@@ -1,0 +1,29 @@
+Package: ghinspectoR
+Type: Package
+Title: Function to assist with an audit of many repositories within a GitHub organisation account
+Version: 0.1.0
+Authors@R: c(
+    person(
+      "Zoë", "Turner",
+      email = "zoe.turner3@nhs.net",
+      role = c("aut", "cre")
+    )
+  )
+Description: Functions used to audit and extract information from the GitHub organisation account.
+    Particularly used in conjunction with a GitHub app to access all repositories across the organisation.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Depends:
+    R (>= 4.1.0)
+Config/roxygen2/version: 8.0.0
+Imports: 
+    base64enc,
+    dplyr,
+    gh,
+    httr2,
+    lubridate,
+    openssl,
+    purrr,
+    tibble
+URL: https://github.com/The-Strategy-Unit/ghinspectoR
+BugReports: https://github.com/The-Strategy-Unit/ghinspectoR/issues

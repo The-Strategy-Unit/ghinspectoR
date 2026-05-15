@@ -3,6 +3,8 @@
 export(get_branches)
 export(get_codeowners)
 export(get_files)
+export(get_github_iat_pat)
+export(get_github_jwt)
 export(get_issues)
 export(get_member_details)
 export(get_members)

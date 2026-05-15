@@ -27,3 +27,5 @@ Imports:
     tibble
 URL: https://github.com/The-Strategy-Unit/ghinspectoR
 BugReports: https://github.com/The-Strategy-Unit/ghinspectoR/issues
+Suggests: 
+    keyring

@@ -61,6 +61,23 @@ validate_repo <- function(repo) {
   }
 }
 
+#' Internal helper: validate GitHub repository team names
+#'
+#' @description
+#' Checks that the `team` argument is a single character string.
+#'
+#' @param team A repository name.
+#'
+#' @return Nothing. Throws an error if validation fails.
+#'
+#' @keywords internal
+#' @noRd
+validate_team <- function(team) {
+  if (!is.character(team) || length(team) != 1) {
+    stop("`team` must be a single character string.", call. = FALSE)
+  }
+}
+
 #' Internal helper: retrieve a file from a GitHub repository
 #'
 #' @description
@@ -312,6 +329,25 @@ gh_get_teams <- function(org, token = get_github_iat_pat()) {
   gh_safe(
     "GET /orgs/{org}/teams",
     org = org,
+    .limit = Inf,
+    token = token
+  )
+}
+
+gh_get_team_members <- function(
+  org,
+  team,
+  role = "all",
+  token = get_github_iat_pat()
+) {
+  validate_org(org)
+  validate_team(team)
+
+  gh_safe(
+    "GET /orgs/{org}/teams/{team}/members",
+    org = org,
+    team = team,
+    role = role,
     .limit = Inf,
     token = token
   )

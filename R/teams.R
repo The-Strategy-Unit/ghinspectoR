@@ -69,63 +69,67 @@ tidy_teams <- function(team_list) {
 #' \dontrun{
 #' teams <- get_teams(org = "my-org") |> tidy_teams()
 #' get_team_members(org = "my-org", teams = teams)
+#'
+#' get_team_members(org = "my-org", teams = "my-team-name")
 #' }
 #'
-#' @return list user objects returned by the GitHub API.
+#' @return A list of team member objects.
 #'
 #' @export
-get_team_members <- function(
-  org,
-  teams,
-  token = get_github_iat_pat()
-) {
-  slugs <- teams$team_slug
+get_team_members <- function(teams, org, token = get_github_iat_pat()) {
+  validate_org(org)
+
+  team_slugs <- teams
+
+  # If a tibble, extract the slug column
+  if (is.data.frame(teams)) {
+    team_slugs <- teams$team_slug
+  }
 
   purrr::map(
-    slugs,
-    \(slug) get_members(org = org)
+    team_slugs,
+    \(team_slug) gh_get_team_members(org, team_slug, "all", token)
   ) |>
-    purrr::set_names(slugs)
+    rlang::set_names(team_slugs)
 }
 
-
-#' Convert team members list into a tidy data frame
+#' Tidy team membership data returned from the GitHub API
 #'
 #' @description
-#' Converts team members information in list returned by [get_team_members]
-#' into a tidy data frame.
+#' Converts team information in list returned by [get_team_members] into a tidy
+#' data frame.
 #'
-#' @param team_members_list A list of team members objects.
+#' @param team_members_list A named list of raw team membership responses
 #'
-#' @returns data frame
-#' @export
+#' @return
+#' A tibble with two columns:
+#' \describe{
+#'   \item{team_slug}{The team slug associated with each member.}
+#'   \item{login}{The GitHub username of the team member.}
+#' }
 #'
 #' @examples
 #' \dontrun{
 #' teams <- get_teams(org = "my-org") |> tidy_teams()
-#' get_team_members(org = "my-org", teams = teams) |> tidy_team_members()
+#' get_team_members(teams, org = "my-org") |> tidy_team_members(raw)
 #' }
+#'
+#' @seealso
+#' [gh_get_team_members(), get_team_members()]
+#'
+#' @export
 tidy_team_members <- function(team_members_list) {
-  get
   purrr::imap_dfr(
     team_members_list,
     \(members, team_slug) {
-      if (is.null(members) || length(members) == 0) {
-        return(tibble::tibble(
-          team_slug = team_slug,
-          login = NA_character_
-        ))
-      }
-
-      tibble::tibble(
-        team_slug = team_slug,
-        login = purrr::map_chr(
-          members,
-          purrr::pluck,
-          "login",
-          .default = NA_character_
+      if (length(members) == 0) {
+        tibble::tibble(team_slug = team_slug, login = NA_character_)
+      } else {
+        tibble::tibble(
+          team_slug = rep(team_slug, length(members)),
+          login = purrr::map_chr(members, "login")
         )
-      )
+      }
     }
   )
 }

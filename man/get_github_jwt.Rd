@@ -32,7 +32,7 @@ as a GitHub App. The function supports three ways of supplying credentials:
 The lookup order is:
 
 1. values supplied directly to the function
-2. values retrieved from the keyring set up from the /{keyring/} package
+2. values retrieved from the keyring set up from the \{keyring\} package
 3. values retrieved from environment variables
 
 If neither a private key nor an app ID can be found, the function stops with

@@ -4,19 +4,19 @@
 \alias{get_team_members}
 \title{Retrieve members of a team}
 \usage{
-get_team_members(org, teams, token = get_github_iat_pat())
+get_team_members(teams, org, token = get_github_iat_pat())
 }
 \arguments{
-\item{org}{GitHub organisation name.}
-
 \item{teams}{usually from [get_teams] and [tidy_teams] functions containing
 `team_slug` column}
+
+\item{org}{GitHub organisation name.}
 
 \item{token}{A GitHub installation access token or personal access token.
 Default uses `get_github_iat_pat()`}
 }
 \value{
-list user objects returned by the GitHub API.
+A list of team member objects.
 }
 \description{
 Retrieves all members of a specific GitHub organisation team.
@@ -25,6 +25,8 @@ Retrieves all members of a specific GitHub organisation team.
 \dontrun{
 teams <- get_teams(org = "my-org") |> tidy_teams()
 get_team_members(org = "my-org", teams = teams)
+
+get_team_members(org = "my-org", teams = "my-team-name")
 }
 
 }

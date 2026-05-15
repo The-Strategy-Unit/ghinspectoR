@@ -177,16 +177,16 @@ tidy_outside_collaborators <- function(list) {
 #'
 #' @examples
 #' \dontrun{
-#' members <- get_members(org) |> tidy_members() |> get_member_details()
+#' members <- get_members(org) |> tidy_members() |> add_member_details()
 #' collaborators <- get_outside_collaborators(org) |>
 #' tidy_outside_collaborators() |>
-#'   get_member_details()
-#' owners <- get_owners(org) |> tidy_owners() |> get_member_details()
+#'   add_member_details()
+#' owners <- get_owners(org) |> tidy_owners() |> add_member_details()
 #'
 #' }
 #'
 #' @export
-get_member_details <- function(people, token = get_github_iat_pat()) {
+add_member_details <- function(people, token = get_github_iat_pat()) {
   profiles <- purrr::map(
     people$login,
     \(u) gh_safe("GET /users/{username}", username = u, token = token)

@@ -17,7 +17,14 @@
 #'
 #' @export
 get_members <- function(org, token = get_github_iat_pat()) {
-  gh_get_members(org, token)
+  validate_org(org)
+
+  gh_safe(
+    "GET /orgs/{org}/members",
+    org = org,
+    .limit = Inf,
+    token = token
+  )
 }
 
 #' Convert organisation member list into a tidy data frame
@@ -61,7 +68,15 @@ tidy_members <- function(list) {
 #'
 #' @export
 get_owners <- function(org, token = get_github_iat_pat()) {
-  gh_get_owners(org, token)
+  validate_org(org)
+
+  gh_safe(
+    "GET /orgs/{org}/members",
+    org = org,
+    role = "admin",
+    .limit = Inf,
+    token = token
+  )
 }
 
 #' Convert organisation owner list into a tidy data frame
@@ -108,7 +123,14 @@ tidy_owners <- function(list) {
 #'
 #' @export
 get_outside_collaborators <- function(org, token = get_github_iat_pat()) {
-  gh_get_outside_collaborators(org, token)
+  validate_org(org)
+
+  gh_safe(
+    "GET /orgs/{org}/outside_collaborators",
+    org = org,
+    .limit = Inf,
+    token = token
+  )
 }
 
 #' Convert list outside collaborator data into a tidy data frame

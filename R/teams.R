@@ -16,7 +16,14 @@
 #'
 #' @export
 get_teams <- function(org, token = get_github_iat_pat()) {
-  gh_get_teams(org, token)
+  validate_org(org)
+
+  gh_safe(
+    "GET /orgs/{org}/teams",
+    org = org,
+    .limit = Inf,
+    token = token
+  )
 }
 
 

@@ -3,6 +3,8 @@
 # These functions wrap gh::gh() with consistent authentication, error handling,
 # and input validation. They are used by the exported functions in the package
 # and are not intended to be called directly by users.
+# Also used in some get_ functions which use purrr loops for multiple data
+# extractions.
 
 #' Internal helper: safe GitHub API call
 #'
@@ -197,7 +199,7 @@ gh_get_branches <- function(org, repo, token = get_github_iat_pat()) {
 #' @description
 #' Retrieves open issues for a repository using the GitHub API. This function is
 #' used internally by higher-level wrappers such as
-#' [get_issues](ca://s?q=get_issues_function) and should not be called directly
+#' [get_issues] and should not be called directly
 #' by users.
 #'
 #' @param org GitHub organisation or username.
@@ -228,107 +230,6 @@ gh_get_issues <- function(org, repo, token = get_github_iat_pat()) {
     repo = repo,
     state = "open",
     .per_page = 100,
-    .limit = Inf,
-    token = token
-  )
-}
-
-#' Internal helper: retrieve organisation members
-#'
-#' @description
-#' Retrieves all members of a GitHub organisation using the GitHub API. This
-#' includes users with the default `member` role. Used internally by
-#' [get_org_members].
-#'
-#' @param org GitHub organisation name.
-#' @param token A GitHub installation access token or personal access token.
-#'
-#' @return A list of user objects returned by the GitHub API, or `NULL` if the
-#'   request fails.
-#'
-#' @keywords internal
-#' @noRd
-gh_get_members <- function(org, token = get_github_iat_pat()) {
-  validate_org(org)
-
-  gh_safe(
-    "GET /orgs/{org}/members",
-    org = org,
-    .limit = Inf,
-    token = token
-  )
-}
-
-#' Internal helper: retrieve organisation owners
-#'
-#' @description
-#' Retrieves users with the `admin` role (organisation owners) using the GitHub
-#' API. Used internally by [get_owners].
-#'
-#' @param org GitHub organisation name.
-#' @param token A GitHub installation access token or personal access token.
-#'
-#' @return A list of user objects, or `NULL` if the request fails.
-#'
-#' @keywords internal
-#' @noRd
-gh_get_owners <- function(org, token = get_github_iat_pat()) {
-  validate_org(org)
-
-  gh_safe(
-    "GET /orgs/{org}/members",
-    org = org,
-    role = "admin",
-    .limit = Inf,
-    token = token
-  )
-}
-
-#' Internal helper: retrieve outside collaborators
-#'
-#' @description
-#' Retrieves outside collaborators for a GitHub organisation. Outside
-#' collaborators have access to specific repositories but are not organisation
-#' members. Used internally by
-#' [get_outside_collaborators].
-#'
-#' @param org GitHub organisation name.
-#' @param token A GitHub installation access token or personal access token.
-#'
-#' @return A list of user objects, or `NULL` if the request fails.
-#'
-#' @keywords internal
-#' @noRd
-gh_get_outside_collaborators <- function(org, token = get_github_iat_pat()) {
-  validate_org(org)
-
-  gh_safe(
-    "GET /orgs/{org}/outside_collaborators",
-    org = org,
-    .limit = Inf,
-    token = token
-  )
-}
-
-#' Internal helper: retrieve organisation teams
-#'
-#' @description
-#' Retrieves all teams within a GitHub organisation. Used internally by
-#' [get_teams].
-#'
-#' @param org GitHub organisation name.
-#' @param token A GitHub installation access token or personal access token.
-#'
-#' @return A list of team objects, or `NULL` if the request fails.
-#'
-#' @keywords internal
-#' @noRd
-gh_get_teams <- function(org, token = get_github_iat_pat()) {
-  validate_org(org)
-
-  gh_safe(
-    "GET /orgs/{org}/teams",
-    org = org,
     .limit = Inf,
     token = token
   )

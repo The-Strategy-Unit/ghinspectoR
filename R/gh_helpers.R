@@ -235,6 +235,21 @@ gh_get_issues <- function(org, repo, token = get_github_iat_pat()) {
   )
 }
 
+#' Internal helper: retrieve collaborators for a repository
+#'
+#' @description
+#' Retrieves collaborator metadata for a repository using the GitHub API.
+#' Returns the raw API response.
+#'
+#' @param org GitHub organisation or username.
+#' @param repo Repository name.
+#' @param token A GitHub installation access token or personal access token.
+#'
+#' @return A list of collaborator objects returned by the GitHub API, or `NULL`
+#'   if the request fails.
+#'
+#' @keywords internal
+#' @noRd
 gh_get_team_members <- function(
   org,
   team,
@@ -250,6 +265,35 @@ gh_get_team_members <- function(
     team = team,
     role = role,
     .limit = Inf,
+    token = token
+  )
+}
+
+#' Internal helper: retrieve collaborators for a repository
+#'
+#' @description
+#' Retrieves collaborator metadata for a repository using the GitHub API.
+#' Returns the raw API response.
+#'
+#' @param org GitHub organisation or username.
+#' @param repo Repository name.
+#' @param token A GitHub installation access token or personal access token.
+#'
+#' @return A list of collaborator objects returned by the GitHub API, or `NULL`
+#'   if the request fails.
+#'
+#' @keywords internal
+#' @noRd
+
+gh_get_repo_members <- function(
+  org,
+  repo,
+  token = get_github_iat_pat()
+) {
+  gh_safe(
+    "GET /repos/{org}/{repo}/collaborators",
+    org = org,
+    repo = repo,
     token = token
   )
 }

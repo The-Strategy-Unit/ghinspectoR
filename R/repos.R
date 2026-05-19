@@ -89,3 +89,77 @@ tidy_repos <- function(result) {
     }) |>
     purrr::list_rbind()
 }
+
+
+#' Retrieve collaborators for one or more repositories
+#'
+#' @description
+#' Retrieves the list of collaborators for one or more repositories within
+#' a GitHub organisation.
+#'
+#' @param org GitHub organisation name.
+#' @param repos One or more repository names.
+#' @param token A GitHub installation access token or personal access token.
+#'   Default uses `get_github_iat_pat()`.
+#'
+#' @examples
+#' \dontrun{
+#' get_repo_members(org = "my-org", repos = "my-repo")
+#' }
+#'
+#' @return A named list of user objects returned by the GitHub API.
+#'
+#' @export
+
+get_repo_members <- function(
+  org,
+  repos,
+  token = get_github_iat_pat()
+) {
+  validate_org(org)
+
+  # Normalise input to a character vector of repo names
+  repo_names <- normalise_repo_names(repos)
+
+  purrr::map(
+    repo_names,
+    \(repo) gh_get_repo_members(org, repo, token)
+  ) |>
+    purrr::set_names(repo_names)
+}
+
+
+#' Tidy collaborator data for one or more repositories
+#'
+#' @description
+#' Converts the raw collaborator lists returned by [get_repo_members] into
+#' a tidy tibble with one row per collaborator per repository.
+#'
+#' @param result A named list returned by [get_repo_members].
+#'
+#' @examples
+#' \dontrun{
+#' get_repo_members(org = "my-org", repos = "my-repo") |> tidy_repo_members()
+#' }
+#'
+#' @return A tibble containing repository names, logins, and role names.
+#'
+#' @export
+
+tidy_repo_members <- function(result) {
+  purrr::imap_dfr(
+    result,
+    \(users, repo) {
+      purrr::map_dfr(
+        users,
+        \(u) {
+          tibble::tibble(
+            repo = repo,
+            login = purrr::pluck(u, "login"),
+            role_name = purrr::pluck(u, "role_name")
+          )
+        }
+      )
+    }
+  )
+}

@@ -20,8 +20,8 @@
 #' the duration of the session using `Sys.setenv()`. This behaviour ensures that
 #' deployments succeed without requiring permanent changes to `.Renviron`.
 #'
-#' @param key The GitHub App private key as a PEM string. If `NULL`, the
-#'   function attempts to retrieve it from the keyring entry
+#' @param key The GitHub App private key as a PEM string or Base64-encoded PEM.
+#'   If `NULL`, the function attempts to retrieve it from the keyring entry
 #'   `"GITHUB_APP_PRIVATE_KEY"` (when running locally) and then from the
 #'   environment variable of the same name.
 #'
@@ -58,7 +58,7 @@ get_github_jwt <- function(
   # Detect Posit Connect
   is_connect <- identical(Sys.getenv("RSTUDIO_PRODUCT"), "PositConnect")
 
-  # Detect rsconnect publishing (rsconnect sets this during deployment)
+  # Detect rsconnect publishing
   is_publishing <- identical(Sys.getenv("RSTUDIO_CONNECT"), "TRUE")
 
   # Helper: load secret from keyring if available
@@ -122,7 +122,14 @@ get_github_jwt <- function(
     stop("No GitHub App ID found in keyring or environment.", call. = FALSE)
   }
 
-  # Normalise escaped newlines
+  # --- Decode the key ---
+  # If Base64 → decode
+  if (grepl("^[A-Za-z0-9+/=]+$", key) && !grepl("BEGIN", key)) {
+    key_raw <- openssl::base64_decode(key)
+    key <- rawToChar(key_raw)
+  }
+
+  # Convert escaped newlines
   key <- gsub("\\\\n", "\n", key)
 
   private_key <- openssl::read_key(key)

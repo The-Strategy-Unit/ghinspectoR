@@ -7,14 +7,14 @@
 get_github_jwt(key = NULL, app_id = NULL, expiry_time = 30)
 }
 \arguments{
-\item{key}{The GitHub App private key as a PEM string. If `NULL`, the
-function attempts to retrieve it from the keyring entry
-`"GITHUB_APP_PRIVATE_KEY"` and then from the environment variable of the
-same name.}
+\item{key}{The GitHub App private key as a PEM string or Base64-encoded PEM.
+If `NULL`, the function attempts to retrieve it from the keyring entry
+`"GITHUB_APP_PRIVATE_KEY"` (when running locally) and then from the
+environment variable of the same name.}
 
 \item{app_id}{The GitHub App ID. If `NULL`, the function attempts to retrieve
-it from the keyring entry `"GITHUB_APP_ID"` and then from the environment
-variable of the same name.}
+it from the keyring entry `"GITHUB_APP_ID"` (when running locally) and then
+from the environment variable of the same name.}
 
 \item{expiry_time}{The lifetime of the JWT in seconds. Defaults to 30.}
 }
@@ -23,25 +23,33 @@ A signed JWT as a character string.
 }
 \description{
 `get_github_jwt()` creates a signed JSON Web Token (JWT) for authenticating
-as a GitHub App. The function supports three ways of supplying credentials:
-
-* explicit function arguments
-* secrets stored in the system keyring
-* environment variables
+as a GitHub App. The function supports multiple credential sources and adapts
+automatically depending on whether it is running locally, during an
+`rsconnect` deployment, or on Posit Connect.
 
 The lookup order is:
 
 1. values supplied directly to the function
-2. values retrieved from the keyring set up from the \{keyring\} package
+2. (locally) values retrieved from the system keyring via the \{keyring\} package
 3. values retrieved from environment variables
 
-If neither a private key nor an app ID can be found, the function stops with
-an informative error.
+When running on Posit Connect, the function **always** uses environment
+variables, because keyring backends are not available there.
+
+When publishing locally via `rsconnect::deploy*()`, the function will
+automatically copy available keyring secrets into environment variables for
+the duration of the session using `Sys.setenv()`. This behaviour ensures that
+deployments succeed without requiring permanent changes to `.Renviron`.
 }
 \details{
 Private keys stored in environment variables often contain escaped newline
-characters. The function automatically converts these to real newlines before
-reading the key.
+characters (e.g., `"\\n"`). The function automatically converts these to real
+newlines before reading the key.
+
+When publishing locally, any secrets copied from keyring into environment
+variables via `Sys.setenv()` are **temporary** and apply only to the current
+R session. They are not written to `.Renviron` and do not persist after the
+session ends.
 }
 \examples{
 \dontrun{

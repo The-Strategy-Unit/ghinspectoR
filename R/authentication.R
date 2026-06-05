@@ -1,3 +1,21 @@
+secret_from_connect <- function(var) {
+  val <- Sys.getenv(paste0("CONNECT_", var), unset = NA)
+  if (!is.na(val) && nzchar(val)) val else NA_character_
+}
+
+secret_from_env <- function(var) {
+  val <- Sys.getenv(var, unset = NA)
+  if (!is.na(val) && nzchar(val)) val else NA_character_
+}
+
+secret_from_keyring <- function(service) {
+  tryCatch(
+    keyring::key_get(service),
+    error = function(e) NA_character_
+  )
+}
+
+
 #' Generate a GitHub App JWT
 #'
 #' @description
@@ -55,88 +73,51 @@ get_github_jwt <- function(
   app_id = NULL,
   expiry_time = 30
 ) {
-  # Detect Posit Connect
-  is_connect <- identical(Sys.getenv("RSTUDIO_PRODUCT"), "PositConnect")
-
-  # Detect rsconnect publishing
-  is_publishing <- identical(Sys.getenv("RSTUDIO_CONNECT"), "TRUE")
-
-  # Helper: load secret from keyring if available
-  keyring_available <- function(service) {
-    tryCatch(
-      keyring::key_get(service),
-      error = function(e) NA_character_
-    )
-  }
-
-  # Helper: load secret from environment
-  env_available <- function(env_var) {
-    val <- Sys.getenv(env_var, unset = NA)
-    if (!is.na(val) && nzchar(val)) val else NA_character_
-  }
-
-  # Helper: resolve a secret with correct priority
-  resolve_secret <- function(service, env_var) {
-    # 1. On Posit Connect → ALWAYS use environment variables
-    if (is_connect) {
-      return(env_available(env_var))
-    }
-
-    # 2. If publishing locally → copy keyring → environment
-    if (is_publishing) {
-      kr <- keyring_available(service)
-      if (!is.na(kr) && nzchar(kr)) {
-        Sys.setenv("{env_var}" := kr) # temporary for this session only
-        return(kr)
-      }
-      return(env_available(env_var))
-    }
-
-    # 3. Normal local behaviour → keyring first, then env
-    kr <- keyring_available(service)
-    if (!is.na(kr) && nzchar(kr)) {
-      return(kr)
-    }
-
-    return(env_available(env_var))
-  }
-
-  # Resolve private key
+  # 1. Prefer Posit Connect GitHub Integration
   if (is.null(key)) {
-    key <- resolve_secret("GITHUB_APP_PRIVATE_KEY", "GITHUB_APP_PRIVATE_KEY")
+    key <- secret_from_connect("GITHUB_APP_PRIVATE_KEY")
   }
-
-  # Resolve app ID
   if (is.null(app_id)) {
-    app_id <- resolve_secret("GITHUB_APP_ID", "GITHUB_APP_ID")
+    app_id <- secret_from_connect("GITHUB_APP_ID")
   }
 
-  # Validate
+  # 2. Fallback to local environment variables
   if (is.na(key) || !nzchar(key)) {
-    stop(
-      "No GitHub App private key found in keyring or environment.",
-      call. = FALSE
-    )
+    key <- secret_from_env("GITHUB_APP_PRIVATE_KEY")
   }
   if (is.na(app_id) || !nzchar(app_id)) {
-    stop("No GitHub App ID found in keyring or environment.", call. = FALSE)
+    app_id <- secret_from_env("GITHUB_APP_ID")
   }
 
-  # --- Decode the key ---
-  # If Base64 → decode
+  # 3. Fallback to keyring for local development
+  if (is.na(key) || !nzchar(key)) {
+    key <- secret_from_keyring("GITHUB_APP_PRIVATE_KEY")
+  }
+  if (is.na(app_id) || !nzchar(app_id)) {
+    app_id <- secret_from_keyring("GITHUB_APP_ID")
+  }
+
+  # 4. Validate
+  if (is.na(key) || !nzchar(key)) {
+    stop("No GitHub App private key found in Connect, env, or keyring.")
+  }
+  if (is.na(app_id) || !nzchar(app_id)) {
+    stop("No GitHub App ID found in Connect, env, or keyring.")
+  }
+
+  # 5. Decode Base64 if needed
   if (grepl("^[A-Za-z0-9+/=]+$", key) && !grepl("BEGIN", key)) {
-    key_raw <- openssl::base64_decode(key)
-    key <- rawToChar(key_raw)
+    key <- rawToChar(openssl::base64_decode(key))
   }
 
-  # Convert escaped newlines
+  # 6. Convert escaped newlines
   key <- gsub("\\\\n", "\n", key)
 
   private_key <- openssl::read_key(key)
 
   now <- as.numeric(Sys.time())
   claim <- httr2::jwt_claim(
-    iat = now,
+    iat = now - 60,
     exp = now + expiry_time,
     iss = app_id
   )
@@ -150,6 +131,13 @@ get_github_app_installation_id <- function(
   jwt = get_github_jwt(),
   github_api_ep = "https://api.github.com/"
 ) {
+  # NEW: Prefer Posit Connect GitHub Integration
+  inst <- Sys.getenv("CONNECT_GITHUB_INSTALLATION_ID", unset = NA)
+  if (!is.na(inst) && nzchar(inst)) {
+    return(inst)
+  }
+
+  # Fallback: discover installation ID via GitHub API
   resp <- httr2::request(github_api_ep) |>
     httr2::req_url_path_append("app", "installations") |>
     httr2::req_method("GET") |>
@@ -161,6 +149,7 @@ get_github_app_installation_id <- function(
 
   httr2::resp_body_json(resp)[[1]][["id"]]
 }
+
 
 #' Generate a GitHub App installation access token
 #'

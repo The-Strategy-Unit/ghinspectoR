@@ -4,7 +4,7 @@
 \alias{get_issues}
 \title{Retrieve issues for one or more GitHub repositories}
 \usage{
-get_issues(repos, org, token = get_github_iat_pat())
+get_issues(repos, org, token = get_token())
 }
 \arguments{
 \item{repos}{A character vector of repository names, or a data frame with a
@@ -14,7 +14,7 @@ column named `repo_name`.}
 username that owns the repositories.}
 
 \item{token}{A GitHub installation access token or personal access token.
-The default is `get_github_iat_pat()`.}
+The default is `get_token()`.}
 }
 \value{
 A named list where each element contains the raw issue objects for a single
@@ -34,5 +34,5 @@ Only open issues are retrieved. Pagination is handled automatically.
 }
 \seealso{
 * [tidy_techdebt_issues()] for filtering and tidying issue data
-* [get_github_iat_pat()] for obtaining the GitHub App installation token
+* [get_token()] for obtaining the GitHub App installation token
 }

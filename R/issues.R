@@ -13,7 +13,7 @@
 #'   username that owns the repositories.
 #'
 #' @param token A GitHub installation access token or personal access token.
-#'   The default is `get_github_iat_pat()`.
+#'   The default is `get_token()`.
 #'
 #' @details
 #' The function queries the GitHub API endpoint:
@@ -27,14 +27,14 @@
 #'
 #' @seealso
 #' * [tidy_techdebt_issues()] for filtering and tidying issue data
-#' * [get_github_iat_pat()] for obtaining the GitHub App installation token
+#' * [get_token()] for obtaining the GitHub App installation token
 #'
 #' @export
 
 get_issues <- function(
   repos,
   org,
-  token = get_github_iat_pat()
+  token = get_token()
 ) {
   validate_org(org)
 

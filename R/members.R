@@ -5,7 +5,7 @@
 #'
 #' @param org GitHub organisation name.
 #' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_github_iat_pat()`
+#' Default uses `get_token()`
 #'
 #' @return list user objects returned by the GitHub API.
 #' @seealso [tidy_members()]
@@ -16,7 +16,7 @@
 #' }
 #'
 #' @export
-get_members <- function(org, token = get_github_iat_pat()) {
+get_members <- function(org, token = get_token()) {
   validate_org(org)
 
   gh_safe(
@@ -57,7 +57,7 @@ tidy_members <- function(list) {
 #'
 #' @param org GitHub organisation name.
 #' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_github_iat_pat()`
+#' Default uses `get_token()`
 #'
 #' @return list user objects returned by the GitHub API.
 #'
@@ -67,7 +67,7 @@ tidy_members <- function(list) {
 #' }
 #'
 #' @export
-get_owners <- function(org, token = get_github_iat_pat()) {
+get_owners <- function(org, token = get_token()) {
   validate_org(org)
 
   gh_safe(
@@ -112,7 +112,7 @@ tidy_owners <- function(list) {
 #'
 #' @param org GitHub organisation name.
 #' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_github_iat_pat()`
+#' Default uses `get_token()`
 #'
 #' @return list user objects returned by the GitHub API.
 #'
@@ -122,7 +122,7 @@ tidy_owners <- function(list) {
 #' }
 #'
 #' @export
-get_outside_collaborators <- function(org, token = get_github_iat_pat()) {
+get_outside_collaborators <- function(org, token = get_token()) {
   validate_org(org)
 
   gh_safe(
@@ -174,7 +174,7 @@ tidy_outside_collaborators <- function(list) {
 #'
 #' @param people A tibble containing at least a `login` column
 #' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_github_iat_pat()`
+#' Default uses `get_token()`
 #'
 #' @details
 #' GitHub's organisation-level APIs return only minimal user information.
@@ -208,7 +208,7 @@ tidy_outside_collaborators <- function(list) {
 #' }
 #'
 #' @export
-add_member_details <- function(people, token = get_github_iat_pat()) {
+add_member_details <- function(people, token = get_token()) {
   profiles <- purrr::map(
     people$login,
     \(u) gh_safe("GET /users/{username}", username = u, token = token)

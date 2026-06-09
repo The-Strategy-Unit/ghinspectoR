@@ -4,7 +4,7 @@
 \alias{get_files}
 \title{Retrieve a specific file from multiple GitHub repositories}
 \usage{
-get_files(repos, org, file_name, token = get_github_iat_pat())
+get_files(repos, org, file_name, token = get_token())
 }
 \arguments{
 \item{repos}{A character vector of repository names or a data frame with a

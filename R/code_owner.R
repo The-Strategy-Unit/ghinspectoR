@@ -15,7 +15,7 @@
 #'   column named `repo_name`.
 #' @param org GitHub organisation or username.
 #' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_github_iat_pat()`
+#' Default uses `get_token()`
 #'
 #' @return
 #' A named list where each element contains:
@@ -35,7 +35,7 @@
 get_codeowners <- function(
   repos,
   org,
-  token = get_github_iat_pat()
+  token = get_token()
 ) {
   validate_org(org)
 

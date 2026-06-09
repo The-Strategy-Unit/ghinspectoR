@@ -21,7 +21,7 @@
 #'
 #' @keywords internal
 #' @noRd
-gh_safe <- function(endpoint, ..., token = get_github_iat_pat()) {
+gh_safe <- function(endpoint, ..., token = get_token()) {
   purrr::possibly(
     gh::gh,
     otherwise = NULL
@@ -110,7 +110,7 @@ validate_team <- function(team) {
 #'
 #' @keywords internal
 #' @noRd
-gh_get_file <- function(org, repo, path, token = get_github_iat_pat()) {
+gh_get_file <- function(org, repo, path, token = get_token()) {
   validate_org(org)
   validate_repo(repo)
 
@@ -154,7 +154,7 @@ gh_get_file <- function(org, repo, path, token = get_github_iat_pat()) {
 #'
 #' @keywords internal
 #' @noRd
-gh_get_commit <- function(org, repo, sha = sha, token = get_github_iat_pat()) {
+gh_get_commit <- function(org, repo, sha = sha, token = get_token()) {
   validate_org(org)
   validate_repo(repo)
 
@@ -182,7 +182,7 @@ gh_get_commit <- function(org, repo, sha = sha, token = get_github_iat_pat()) {
 #'
 #' @keywords internal
 #' @noRd
-gh_get_branches <- function(org, repo, token = get_github_iat_pat()) {
+gh_get_branches <- function(org, repo, token = get_token()) {
   validate_org(org)
   validate_repo(repo)
 
@@ -220,7 +220,7 @@ gh_get_branches <- function(org, repo, token = get_github_iat_pat()) {
 #'
 #' @keywords internal
 #' @noRd
-gh_get_issues <- function(org, repo, token = get_github_iat_pat()) {
+gh_get_issues <- function(org, repo, token = get_token()) {
   validate_org(org)
   validate_repo(repo)
 
@@ -254,7 +254,7 @@ gh_get_team_members <- function(
   org,
   team,
   role = "all",
-  token = get_github_iat_pat()
+  token = get_token()
 ) {
   validate_org(org)
   validate_team(team)
@@ -288,7 +288,7 @@ gh_get_team_members <- function(
 gh_get_repo_members <- function(
   org,
   repo,
-  token = get_github_iat_pat()
+  token = get_token()
 ) {
   gh_safe(
     "GET /repos/{org}/{repo}/collaborators",

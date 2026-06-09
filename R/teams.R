@@ -4,7 +4,7 @@
 #' Retrieves teams (grouped members) within a GitHub organisation.
 #'
 #' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_github_iat_pat()`
+#' Default uses `get_token()`
 #' @param org GitHub organisation name.
 #'
 #' @examples
@@ -15,7 +15,7 @@
 #' @return list user objects returned by the GitHub API.
 #'
 #' @export
-get_teams <- function(org, token = get_github_iat_pat()) {
+get_teams <- function(org, token = get_token()) {
   validate_org(org)
 
   gh_safe(
@@ -68,7 +68,7 @@ tidy_teams <- function(team_list) {
 #'
 #' @param org GitHub organisation name.
 #' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_github_iat_pat()`
+#' Default uses `get_token()`
 #' @param teams usually from [get_teams] and [tidy_teams] functions containing
 #' `team_slug` column
 #'
@@ -83,7 +83,7 @@ tidy_teams <- function(team_list) {
 #' @return A list of team member objects.
 #'
 #' @export
-get_team_members <- function(teams, org, token = get_github_iat_pat()) {
+get_team_members <- function(teams, org, token = get_token()) {
   validate_org(org)
 
   team_slugs <- teams

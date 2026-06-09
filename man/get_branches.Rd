@@ -4,7 +4,7 @@
 \alias{get_branches}
 \title{Retrieve branch information from GitHub repositories}
 \usage{
-get_branches(repos, org, token = get_github_iat_pat())
+get_branches(repos, org, token = get_token())
 }
 \arguments{
 \item{repos}{A character vector of repository names, or a data frame with a
@@ -15,7 +15,7 @@ If a data frame is supplied without this column, an error is raised.}
 username that owns the repositories.}
 
 \item{token}{A GitHub installation access token or personal access token.
-The default is `get_github_iat_pat()`, which should return a valid token
+The default is `get_token()`, which should return a valid token
 for accessing repositories through the GitHub App.}
 }
 \value{
@@ -59,5 +59,5 @@ get_branches(repos, org = "my-org")
 \seealso{
 * [get_repos()] for retrieving repository names
 * [tidy_repos()] for converting the list format to a data frame
-* [get_github_iat_pat()] for obtaining the GitHub App installation token
+* [get_token()] for obtaining the GitHub App installation token
 }

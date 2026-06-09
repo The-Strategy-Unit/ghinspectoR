@@ -18,8 +18,10 @@ Depends:
 Config/roxygen2/version: 8.0.0
 Imports: 
     base64enc,
+    connectapi,
     dplyr,
     gh,
+    gitcreds,
     httr2,
     lubridate,
     openssl,

@@ -34,7 +34,7 @@ get_single_file <- function(
   org,
   repo,
   file_name,
-  token = get_github_iat_pat()
+  token = get_token()
 ) {
   validate_org(org)
 
@@ -121,7 +121,7 @@ get_files <- function(
   repos,
   org,
   file_name,
-  token = get_github_iat_pat()
+  token = get_token()
 ) {
   validate_org(org)
   repo_names <- normalise_repo_names(repos)

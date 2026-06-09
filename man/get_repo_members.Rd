@@ -4,7 +4,7 @@
 \alias{get_repo_members}
 \title{Retrieve collaborators for one or more repositories}
 \usage{
-get_repo_members(org, repos, token = get_github_iat_pat())
+get_repo_members(org, repos, token = get_token())
 }
 \arguments{
 \item{org}{GitHub organisation name.}
@@ -12,7 +12,7 @@ get_repo_members(org, repos, token = get_github_iat_pat())
 \item{repos}{One or more repository names.}
 
 \item{token}{A GitHub installation access token or personal access token.
-Default uses `get_github_iat_pat()`.}
+Default uses `get_token()`.}
 }
 \value{
 A named list of user objects returned by the GitHub API.

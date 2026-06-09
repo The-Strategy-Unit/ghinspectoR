@@ -38,7 +38,7 @@ get_single_file <- function(
 ) {
   validate_org(org)
 
-  gh_safe(
+  gh::gh(
     "GET /repos/{org}/{repo}/contents/{path}",
     org = org,
     repo = repo,

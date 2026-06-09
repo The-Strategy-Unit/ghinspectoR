@@ -18,7 +18,7 @@
 get_teams <- function(org, token = get_token()) {
   validate_org(org)
 
-  gh_safe(
+  gh::gh(
     "GET /orgs/{org}/teams",
     org = org,
     .limit = Inf,

@@ -35,17 +35,16 @@
 #' @export
 get_repos <- function(
   org,
-  limit = Inf,
-  token = get_token()
+  limit = Inf
 ) {
   validate_org(org)
 
-  gh_safe(
+  gh::gh(
     "GET /orgs/{org}/repos",
     org = org,
     .limit = limit,
     .per_page = 100,
-    token = token
+    .token = get_token()
   )
 }
 

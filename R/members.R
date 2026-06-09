@@ -19,7 +19,7 @@
 get_members <- function(org, token = get_token()) {
   validate_org(org)
 
-  gh_safe(
+  gh::gh(
     "GET /orgs/{org}/members",
     org = org,
     .limit = Inf,
@@ -70,7 +70,7 @@ tidy_members <- function(list) {
 get_owners <- function(org, token = get_token()) {
   validate_org(org)
 
-  gh_safe(
+  gh::gh(
     "GET /orgs/{org}/members",
     org = org,
     role = "admin",
@@ -125,7 +125,7 @@ tidy_owners <- function(list) {
 get_outside_collaborators <- function(org, token = get_token()) {
   validate_org(org)
 
-  gh_safe(
+  gh::gh(
     "GET /orgs/{org}/outside_collaborators",
     org = org,
     .limit = Inf,
@@ -211,7 +211,7 @@ tidy_outside_collaborators <- function(list) {
 add_member_details <- function(people, token = get_token()) {
   profiles <- purrr::map(
     people$login,
-    \(u) gh_safe("GET /users/{username}", username = u, token = token)
+    \(u) gh::gh("GET /users/{username}", username = u, token = token)
   )
 
   people$name <- purrr::map_chr(profiles, "name", .default = NA_character_)

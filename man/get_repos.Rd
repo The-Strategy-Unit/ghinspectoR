@@ -4,7 +4,7 @@
 \alias{get_repos}
 \title{Retrieve repositories for a GitHub organisation or user}
 \usage{
-get_repos(org, limit = Inf, token = get_token())
+get_repos(org, limit = Inf)
 }
 \arguments{
 \item{org}{A single character string giving the GitHub organisation or

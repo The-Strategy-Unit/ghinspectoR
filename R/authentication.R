@@ -27,6 +27,7 @@ get_token <- function() {
     connectapi::get_oauth_content_credentials(client)
   } else {
     message("Running locally using gitcreds to access GH token")
-    gitcreds::gitcreds_get()
+    creds <- gitcreds::gitcreds_get()
+    creds$password
   }
 }

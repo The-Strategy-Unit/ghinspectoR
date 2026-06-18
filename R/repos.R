@@ -44,7 +44,8 @@ get_repos <- function(
     org = org,
     .limit = limit,
     .per_page = 100,
-    .token = get_token()
+    .token = get_token(),
+    progress = TRUE
   )
 }
 

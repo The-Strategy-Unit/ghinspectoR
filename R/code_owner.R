@@ -44,7 +44,7 @@ get_codeowners <- function(
 
   purrr::map(
     repo_names,
-    \(repo) gh_get_file(org, repo, "CODEOWNERS", token)
+    \(repo) get_files(org, repo, "CODEOWNERS", token)
   ) |>
     purrr::set_names(repo_names)
 }

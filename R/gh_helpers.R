@@ -72,7 +72,7 @@ validate_team <- function(team) {
 #'
 #' @param org GitHub organisation or username.
 #' @param repo Repository name.
-#' @param path File name to search for (e.g., `"CODEOWNERS"`).
+#' @param path File name to search for (for example `"CODEOWNERS"`).
 #' @param token A GitHub installation access token or personal access token.
 #'
 #' @return A GitHub API response containing file metadata and base64-encoded
@@ -80,7 +80,12 @@ validate_team <- function(team) {
 #'
 #' @keywords internal
 #' @noRd
-gh_get_file <- function(org, repo, path, token = get_token()) {
+gh_get_file <- function(
+  org,
+  repo,
+  path,
+  token = get_token()
+) {
   validate_org(org)
   validate_repo(repo)
 
@@ -97,7 +102,7 @@ gh_get_file <- function(org, repo, path, token = get_token()) {
       org = org,
       repo = repo,
       path = p,
-      token = token
+      .token = token
     )
 
     if (!is.null(res)) {

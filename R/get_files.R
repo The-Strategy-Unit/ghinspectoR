@@ -43,7 +43,7 @@ get_single_file <- function(
     org = org,
     repo = repo,
     path = file_name,
-    token = token
+    .token = token
   )
 }
 

@@ -16,14 +16,18 @@
 #' }
 #'
 #' @export
-get_members <- function(org, token = get_token()) {
+get_members <- function(
+  org,
+  token = get_token(),
+  limit = Inf
+) {
   validate_org(org)
 
   gh::gh(
     "GET /orgs/{org}/members",
     org = org,
-    .limit = Inf,
-    token = token
+    .limit = limit,
+    .token = token
   )
 }
 
@@ -67,7 +71,10 @@ tidy_members <- function(list) {
 #' }
 #'
 #' @export
-get_owners <- function(org, token = get_token()) {
+get_owners <- function(
+  org,
+  token = get_token()
+) {
   validate_org(org)
 
   gh::gh(
@@ -75,7 +82,7 @@ get_owners <- function(org, token = get_token()) {
     org = org,
     role = "admin",
     .limit = Inf,
-    token = token
+    .token = token
   )
 }
 
@@ -122,14 +129,17 @@ tidy_owners <- function(list) {
 #' }
 #'
 #' @export
-get_outside_collaborators <- function(org, token = get_token()) {
+get_outside_collaborators <- function(
+  org,
+  token = get_token()
+) {
   validate_org(org)
 
   gh::gh(
     "GET /orgs/{org}/outside_collaborators",
     org = org,
     .limit = Inf,
-    token = token
+    .token = token
   )
 }
 
@@ -208,23 +218,32 @@ tidy_outside_collaborators <- function(list) {
 #' }
 #'
 #' @export
-add_member_details <- function(people, token = get_token()) {
+add_member_details <- function(
+  members,
+  token = get_token()
+) {
   profiles <- purrr::map(
-    people$login,
-    \(u) gh::gh("GET /users/{username}", username = u, token = token)
+    members$login,
+    \(u) {
+      gh::gh(
+        "GET /users/{username}",
+        username = u,
+        .token = get_token()
+      )
+    }
   )
 
-  people$name <- purrr::map_chr(profiles, "name", .default = NA_character_)
-  people$company <- purrr::map_chr(
+  members$name <- purrr::map_chr(profiles, "name", .default = NA_character_)
+  members$company <- purrr::map_chr(
     profiles,
     "company",
     .default = NA_character_
   )
-  people$location <- purrr::map_chr(
+  members$location <- purrr::map_chr(
     profiles,
     "location",
     .default = NA_character_
   )
 
-  people
+  members
 }

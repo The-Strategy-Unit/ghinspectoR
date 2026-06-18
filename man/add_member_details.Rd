@@ -4,13 +4,13 @@
 \alias{add_member_details}
 \title{Details for members with GitHub profile information and members of organisation}
 \usage{
-add_member_details(people, token = get_token())
+add_member_details(members, token = get_token())
 }
 \arguments{
-\item{people}{A tibble containing at least a `login` column}
-
 \item{token}{A GitHub installation access token or personal access token.
 Default uses `get_token()`}
+
+\item{people}{A tibble containing at least a `login` column}
 }
 \value{
 tibble containing the original columns plus additional profile fields.

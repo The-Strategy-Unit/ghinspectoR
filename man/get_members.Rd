@@ -4,7 +4,7 @@
 \alias{get_members}
 \title{Retrieve organisation members}
 \usage{
-get_members(org, token = get_token())
+get_members(org, token = get_token(), limit = Inf)
 }
 \arguments{
 \item{org}{GitHub organisation name.}

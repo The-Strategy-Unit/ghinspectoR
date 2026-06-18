@@ -26,7 +26,7 @@ Imports:
     purrr,
     rlang,
     tibble
-URL: https://github.com/The-Strategy-Unit/ghinspectoR
+URL: https://github.com/The-Strategy-Unit/ghinspectoR, https://the-strategy-unit.github.io/ghinspectoR/
 BugReports: https://github.com/The-Strategy-Unit/ghinspectoR/issues
 Suggests: 
     keyring

@@ -1,0 +1,136 @@
+# ghinspectoR
+
+This package originated from work done for a GitHub dashboard which was
+set up to check over multiple repositories within an organisation. It
+started off with a focus on code owners, stale branches and techdebt
+issues, and with the help of Copilot, has been extended to a series of
+functions that `get_` list data from the GitHub API and then `tidy_` it
+for R user into a more familiar data frame (tibble) view.
+
+The package uses authentication with GitHub which relies upon the
+setting up of an authentication app across the organisation. This has
+been detailed in a
+[blog](https://the-strategy-unit.github.io/data_science/blogs/posts/2025-04-30_using-github-apps-for-authentication/)
+on The Strategy Unit Data Science website.
+
+## Installation
+
+You can install the development version of ghinspectoR:
+
+``` r
+
+# install.packages("pak")
+pak::pak("The-Strategy-Unit/ghinspectoR")
+```
+
+# Github API set up
+
+These functions require a token to be set up on GitHub to connect a
+GitHub App which will be located in the organisation’s page then
+Settings \> GitHub Apps.
+
+The link will look something similar to this with `{organisation-name}`
+replaced with the actual name.
+
+`https://github.com/organizations/{organisation-name}/settings/installations`
+
+> \[!IMPORTANT\]  
+> GitHub Apps can only be set up and maintained by a GitHub Organization
+> Owner. This includes generating of private keys which has details
+> below. Two factor authentication will also be required to access this
+> area.
+
+Adding an account that is not an Owner can be done through Settings (at
+the Organisational level) \> GitHub Apps \> Configure (the specific App)
+\> App Settings \> App managers
+
+## Local set up of .pem file
+
+Once a GitHub App is set up a connection between that and the local
+version of the repository on a computer needs to be set up. This is done
+using a `.pem` file which is downloaded from GitHub located in the
+[Developer
+Settings](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/managing-private-keys-for-github-apps)
+
+If multiple people have access each will have their own `.pem` file.
+
+The private key file will be downloaded with this format of name:
+`<name of app>.<date>.private-key.pem` and needs to be moved from the
+Downloads folder to somewhere that will be easily accessible to the
+Project. This is preferably outside the Project itself but `*.pem` can
+also be added to a `.gitignore` to avoid accidental committing.
+
+## Setting up local credentials using [{keyring}](https://keyring.r-lib.org/) package
+
+The {keyring} package is a secure way to give credential access across
+multiple projects. Set up with the following:
+
+``` r
+
+keyring::key_set("GITHUB_APP_ID")
+```
+
+Add the App ID found from the GitHub App details.
+
+Then run:
+
+``` r
+
+keyring::key_set("GITHUB_APP_PRIVATE_KEY")
+```
+
+Putting in the password box the pathway to the `.pem` file but
+importantly, with no quotations so like
+`C:\Users\name\Documents\SECRETS\GITHUB_APP_PRIVATE_KEY.pem`
+
+To view the keyring:
+
+``` r
+
+keyring::key_get("GITHUB_APP_PRIVATE_KEY")
+keyring::key_get("GITHUB_APP_ID")
+```
+
+Note that for Windows users the `\` in the file pathways get translated
+by the {keyring} package with `\\` automatically.
+
+## Setting up local credentials using `.Renviron`
+
+In some circumstances users may use a `.Renviron` file to save
+credentials and in these circumstances ensure that the file is in the
+`.gitignore` to prevent accidental committing to GitHub.
+
+Opening the `.Renviron` using the {usethis} package:
+
+``` R
+usethis::edit_r_environ(scope = "project")
+```
+
+Note this is opens the project `.Renviron` and so will need to be set up
+for any project that requires this connection. Also note that the
+{usethis} function gives the link to the file and reminds you to restart
+R after any changes in the Console.
+
+In the file add the text:
+
+``` R
+GITHUB_APP_ID=1111111111111111
+GITHUB_APP_PRIVATE_KEY="C:\Users\name.lastName\Downloads\GITHUB_APP_PRIVATE_KEY.pem"
+```
+
+These need to be updated with real information for the ID and key
+pathway. Unlike in the keyring set up, the file pathway in the
+`.Renviron` requires quotes around the text.
+
+## Posit Connect set up
+
+On the Posit Connect published page, in the Settings \> Vars the
+variables are also saved as GITHUB_APP_ID and GITHUB_APP_PRIVATE_KEY.
+
+> \[!WARNING\] Details of variables saved on Posit Connect cannot be
+> viewed, only replaced.
+
+## Further reading
+
+[GitHub Apps for Authentication
+blog](https://the-strategy-unit.github.io/data_science/blogs/posts/2025-04-30_using-github-apps-for-authentication/)

@@ -1,0 +1,72 @@
+# Convert branch list data into a tidy data frame
+
+Takes the list returned by \[get_branches()\] and converts it into a
+tidy data frame. Each row represents one branch within one repository
+and includes the branch name, the commit SHA, the timestamp of the most
+recent commit, and indicators of how long the branch has been inactive.
+
+The function retrieves commit timestamps by calling \[gh_get_commit()\]
+internal helper.
+
+## Usage
+
+``` r
+tidy_branches(
+  branch_list,
+  org,
+  stale_after_days = 90,
+  token = get_github_iat_pat()
+)
+```
+
+## Arguments
+
+- branch_list:
+
+  A named list of GitHub API responses returned by \[get_branches()\].
+  Each element should contain branch metadata for a single repository.
+
+- org:
+
+  A single character string giving the GitHub organisation or username
+  that owns the repositories.
+
+- stale_after_days:
+
+  A number giving the threshold for marking a branch as stale. Branches
+  with no commits more recent than this number of days are flagged as
+  stale. The default is 90 days.
+
+- token:
+
+  A GitHub installation access token or personal access token. The
+  default is \`get_github_iat_pat()\`, which returns a token generated
+  by the GitHub App.
+
+## Value
+
+A data frame with the following columns: \* \`repo_name\`: the name of
+the repository, \* \`branch\`: the branch name, \* \`sha\`: the commit
+SHA, \* \`last_commit\`: the timestamp of the most recent commit, \*
+\`days_since_commit\`: the number of days since the most recent commit,
+\* \`stale\`: whether the branch is older than \`stale_after_days\`.
+
+## See also
+
+\* \[get_branches()\] for retrieving raw branch information \*
+\[tidy_branches()\] to convert the list data into a data frame \*
+\[get_commits()\] for retrieving commit metadata
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+# Using a character vector
+get_branches(c("repo1", "repo2"), org = "my-org")
+
+# Using a data frame returned by get_repos()
+repos <- get_repos(org = "my-org") |>  tidy_repos()
+get_branches(repos, org = "my-org") |> tidy_branches(org = "my-org",
+stale_after_days = 90)
+} # }
+```

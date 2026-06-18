@@ -1,0 +1,60 @@
+# Generate a GitHub App JWT
+
+\`get_github_jwt()\` creates a signed JSON Web Token (JWT) for
+authenticating as a GitHub App. The function supports three ways of
+supplying credentials:
+
+\* explicit function arguments \* secrets stored in the system keyring
+\* environment variables
+
+The lookup order is:
+
+1\. values supplied directly to the function 2. values retrieved from
+the keyring set up from the {keyring} package 3. values retrieved from
+environment variables
+
+If neither a private key nor an app ID can be found, the function stops
+with an informative error.
+
+## Usage
+
+``` r
+get_github_jwt(key = NULL, app_id = NULL, expiry_time = 30)
+```
+
+## Arguments
+
+- key:
+
+  The GitHub App private key as a PEM string. If \`NULL\`, the function
+  attempts to retrieve it from the keyring entry
+  \`"GITHUB_APP_PRIVATE_KEY"\` and then from the environment variable of
+  the same name.
+
+- app_id:
+
+  The GitHub App ID. If \`NULL\`, the function attempts to retrieve it
+  from the keyring entry \`"GITHUB_APP_ID"\` and then from the
+  environment variable of the same name.
+
+- expiry_time:
+
+  The lifetime of the JWT in seconds. Defaults to 30.
+
+## Value
+
+A signed JWT as a character string.
+
+## Details
+
+Private keys stored in environment variables often contain escaped
+newline characters. The function automatically converts these to real
+newlines before reading the key.
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+jwt <- get_github_jwt()
+} # }
+```

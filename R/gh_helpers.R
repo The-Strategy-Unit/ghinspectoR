@@ -53,16 +53,19 @@ validate_team <- function(team) {
 #' Internal helper: retrieve a file from a GitHub repository
 #'
 #' @description
-#' Attempts to retrieve a file from a GitHub repository by checking multiple
-#' possible file paths. This is used for files such as `CODEOWNERS`, which may
-#' appear in different locations within a repository.
+#' Attempts to retrieve a file from a GitHub repository, optionally checking
+#' multiple possible file paths. This is used for files such as `CODEOWNERS`,
+#' which may appear in different locations within a repository.
 #'
 #' @details
-#' The function checks the following paths in order:
-#' * `path`
-#' * `.github/{path}`
-#' * `docs/{path}`
-#' * lowercase version of `path`
+#' When `try_common_locations = TRUE` (the default), the function checks the
+#' following paths in order:
+#' * `file_name`
+#' * `.github/{file_name}`
+#' * `docs/{file_name}`
+#' * lowercase version of `file_name`
+#'
+#' When `try_common_locations = FALSE`, only the exact `path` is tried.
 #'
 #' The first existing file is returned. If no file is found, the function
 #' returns `NULL`.
@@ -73,44 +76,55 @@ validate_team <- function(team) {
 #' @param org GitHub organisation or username.
 #' @param repo Repository name.
 #' @param path File name to search for (for example `"CODEOWNERS"`).
+#' @param file_name File name to search for (for example `"CODEOWNERS"`).
 #' @param token A GitHub installation access token or personal access token.
+#' @param try_common_locations If `TRUE` (the default), the function checks
+#'   common alternative locations (`.github/`, `docs/`, lowercase) in addition
+#'   to the exact path. Set to `FALSE` when the exact path is known.
 #'
 #' @return A GitHub API response containing file metadata and base64-encoded
-#'   content, or `NULL` if the file does not exist in any known location.
+#'   content, or `NULL` if the file does not exist in any of the locations
+#'   tried.
 #'
 #' @keywords internal
 #' @noRd
 gh_get_file <- function(
   org,
   repo,
-  path,
-  token = get_token()
+  file_name,
+  token = get_token(),
+  try_common_locations = TRUE
 ) {
   validate_org(org)
   validate_repo(repo)
 
-  possible_paths <- c(
-    path,
-    file.path(".github", path),
-    file.path("docs", path),
-    tolower(path)
-  )
+  possible_paths <- if (try_common_locations) {
+    c(
+      file_name,
+      file.path(".github", file_name),
+      file.path("docs", file_name),
+      tolower(file_name)
+    )
+  } else {
+    file_name
+  }
 
   for (p in possible_paths) {
-    res <- gh::gh(
-      "GET /repos/{org}/{repo}/contents/{path}",
-      org = org,
-      repo = repo,
-      path = p,
-      .token = token
+    res <- tryCatch(
+      gh::gh(
+        "GET /repos/{org}/{repo}/contents/{path}",
+        org = org,
+        repo = repo,
+        path = p,
+        .token = token
+      ),
+      error = function(e) NULL
     )
-
     if (!is.null(res)) {
       res$requested_path <- p
       return(res)
     }
   }
-
   NULL
 }
 

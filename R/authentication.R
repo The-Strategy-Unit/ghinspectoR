@@ -38,35 +38,41 @@
 #'
 #' @export
 get_token <- function(env_var = "GH_PAT") {
+  if (exists("token", envir = .pkg_env)) {
+    return(.pkg_env$token)
+  }
+
   # Posit Connect: use OAuth credentials
   if (nzchar(Sys.getenv("CONNECT_SERVER"))) {
     message("Running on Posit Connect using OAuth credentials")
     client <- connectapi::connect()
-    return(connectapi::get_oauth_content_credentials(client))
+    token <- connectapi::get_oauth_content_credentials(client)
+  } else {
+    # Local: try keyring first
+    token <- tryCatch(
+      keyring::key_get(env_var),
+      error = function(e) NULL
+    )
+    if (!is.null(token)) {
+      message("Using keyring to access ", env_var)
+    } else {
+      # Fallback: environment variable
+      token <- Sys.getenv(env_var)
+      if (nzchar(token)) {
+        message("Using environment variable ", env_var)
+      } else {
+        stop(
+          env_var,
+          " not found. ",
+          "Set it via keyring::key_set(\"",
+          env_var,
+          "\") ",
+          "or add it to your .Renviron."
+        )
+      }
+    }
   }
 
-  # Local: try keyring first
-  token <- tryCatch(
-    keyring::key_get(env_var),
-    error = function(e) NULL
-  )
-  if (!is.null(token)) {
-    message("Using keyring to access ", env_var)
-    return(token)
-  }
-
-  # Fallback: environment variable (set globally or via project .Renviron)
-  token <- Sys.getenv(env_var)
-  if (nzchar(token)) {
-    message("Using environment variable ", env_var)
-    return(token)
-  }
-
-  stop(
-    env_var,
-    " not found. ",
-    "Set it via keyring::key_set(\"",
-    env_var,
-    "\") or add it to your .Renviron."
-  )
+  .pkg_env$token <- token
+  token
 }

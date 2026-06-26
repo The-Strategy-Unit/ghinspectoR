@@ -1,3 +1,5 @@
+.pkg_env <- new.env(parent = emptyenv())
+
 #' Code used in multiple functions to ensure repository names are normalised
 #'
 #' @param repos vector

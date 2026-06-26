@@ -4,7 +4,7 @@
 \alias{get_single_file}
 \title{Retrieve a single file from a GitHub repository}
 \usage{
-get_single_file(org, repo, file_name, token = get_github_iat_pat())
+get_single_file(org, repo, file_name, token = get_token())
 }
 \arguments{
 \item{org}{The GitHub organisation name.}

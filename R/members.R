@@ -5,7 +5,7 @@
 #'
 #' @param org GitHub organisation name.
 #' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_github_iat_pat()`
+#' Default uses `get_token()`
 #'
 #' @return list user objects returned by the GitHub API.
 #' @seealso [tidy_members()]
@@ -16,14 +16,18 @@
 #' }
 #'
 #' @export
-get_members <- function(org, token = get_github_iat_pat()) {
+get_members <- function(
+  org,
+  token = get_token(),
+  limit = Inf
+) {
   validate_org(org)
 
-  gh_safe(
+  gh::gh(
     "GET /orgs/{org}/members",
     org = org,
-    .limit = Inf,
-    token = token
+    .limit = limit,
+    .token = token
   )
 }
 
@@ -57,7 +61,7 @@ tidy_members <- function(list) {
 #'
 #' @param org GitHub organisation name.
 #' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_github_iat_pat()`
+#' Default uses `get_token()`
 #'
 #' @return list user objects returned by the GitHub API.
 #'
@@ -67,15 +71,18 @@ tidy_members <- function(list) {
 #' }
 #'
 #' @export
-get_owners <- function(org, token = get_github_iat_pat()) {
+get_owners <- function(
+  org,
+  token = get_token()
+) {
   validate_org(org)
 
-  gh_safe(
+  gh::gh(
     "GET /orgs/{org}/members",
     org = org,
     role = "admin",
     .limit = Inf,
-    token = token
+    .token = token
   )
 }
 
@@ -112,7 +119,7 @@ tidy_owners <- function(list) {
 #'
 #' @param org GitHub organisation name.
 #' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_github_iat_pat()`
+#' Default uses `get_token()`
 #'
 #' @return list user objects returned by the GitHub API.
 #'
@@ -122,14 +129,17 @@ tidy_owners <- function(list) {
 #' }
 #'
 #' @export
-get_outside_collaborators <- function(org, token = get_github_iat_pat()) {
+get_outside_collaborators <- function(
+  org,
+  token = get_token()
+) {
   validate_org(org)
 
-  gh_safe(
+  gh::gh(
     "GET /orgs/{org}/outside_collaborators",
     org = org,
     .limit = Inf,
-    token = token
+    .token = token
   )
 }
 
@@ -174,7 +184,7 @@ tidy_outside_collaborators <- function(list) {
 #'
 #' @param people A tibble containing at least a `login` column
 #' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_github_iat_pat()`
+#' Default uses `get_token()`
 #'
 #' @details
 #' GitHub's organisation-level APIs return only minimal user information.
@@ -208,23 +218,32 @@ tidy_outside_collaborators <- function(list) {
 #' }
 #'
 #' @export
-add_member_details <- function(people, token = get_github_iat_pat()) {
+add_member_details <- function(
+  members,
+  token = get_token()
+) {
   profiles <- purrr::map(
-    people$login,
-    \(u) gh_safe("GET /users/{username}", username = u, token = token)
+    members$login,
+    \(u) {
+      gh::gh(
+        "GET /users/{username}",
+        username = u,
+        .token = get_token()
+      )
+    }
   )
 
-  people$name <- purrr::map_chr(profiles, "name", .default = NA_character_)
-  people$company <- purrr::map_chr(
+  members$name <- purrr::map_chr(profiles, "name", .default = NA_character_)
+  members$company <- purrr::map_chr(
     profiles,
     "company",
     .default = NA_character_
   )
-  people$location <- purrr::map_chr(
+  members$location <- purrr::map_chr(
     profiles,
     "location",
     .default = NA_character_
   )
 
-  people
+  members
 }

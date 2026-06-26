@@ -1,33 +1,3 @@
-# Internal GitHub API helper functions
-#
-# These functions wrap gh::gh() with consistent authentication, error handling,
-# and input validation. They are used by the exported functions in the package
-# and are not intended to be called directly by users.
-# Also used in some get_ functions which use purrr loops for multiple data
-# extractions.
-
-#' Internal helper: safe GitHub API call
-#'
-#' @description
-#' Wraps `gh::gh()` in a safe call that returns `NULL` instead of throwing an
-#' error. This ensures that API failures do not interrupt higher-level
-#' functions.
-#'
-#' @param endpoint A GitHub API endpoint string.
-#' @param ... Additional arguments passed to `gh::gh()`.
-#' @param token A GitHub installation access token or personal access token.
-#'
-#' @return The GitHub API response, or `NULL` if the request fails.
-#'
-#' @keywords internal
-#' @noRd
-gh_safe <- function(endpoint, ..., token = get_github_iat_pat()) {
-  purrr::possibly(
-    gh::gh,
-    otherwise = NULL
-  )(endpoint, ..., .token = token)
-}
-
 #' Internal helper: validate GitHub org
 #'
 #' @description
@@ -102,7 +72,7 @@ validate_team <- function(team) {
 #'
 #' @param org GitHub organisation or username.
 #' @param repo Repository name.
-#' @param path File name to search for (e.g., `"CODEOWNERS"`).
+#' @param path File name to search for (for example `"CODEOWNERS"`).
 #' @param token A GitHub installation access token or personal access token.
 #'
 #' @return A GitHub API response containing file metadata and base64-encoded
@@ -110,7 +80,12 @@ validate_team <- function(team) {
 #'
 #' @keywords internal
 #' @noRd
-gh_get_file <- function(org, repo, path, token = get_github_iat_pat()) {
+gh_get_file <- function(
+  org,
+  repo,
+  path,
+  token = get_token()
+) {
   validate_org(org)
   validate_repo(repo)
 
@@ -122,12 +97,12 @@ gh_get_file <- function(org, repo, path, token = get_github_iat_pat()) {
   )
 
   for (p in possible_paths) {
-    res <- gh_safe(
+    res <- gh::gh(
       "GET /repos/{org}/{repo}/contents/{path}",
       org = org,
       repo = repo,
       path = p,
-      token = token
+      .token = token
     )
 
     if (!is.null(res)) {
@@ -154,11 +129,11 @@ gh_get_file <- function(org, repo, path, token = get_github_iat_pat()) {
 #'
 #' @keywords internal
 #' @noRd
-gh_get_commit <- function(org, repo, sha = sha, token = get_github_iat_pat()) {
+gh_get_commit <- function(org, repo, sha = sha, token = get_token()) {
   validate_org(org)
   validate_repo(repo)
 
-  gh_safe(
+  gh::gh(
     "GET /repos/{org}/{repo}/commits/{sha}",
     org = org,
     repo = repo,
@@ -182,11 +157,11 @@ gh_get_commit <- function(org, repo, sha = sha, token = get_github_iat_pat()) {
 #'
 #' @keywords internal
 #' @noRd
-gh_get_branches <- function(org, repo, token = get_github_iat_pat()) {
+gh_get_branches <- function(org, repo, token = get_token()) {
   validate_org(org)
   validate_repo(repo)
 
-  gh_safe(
+  gh::gh(
     "GET /repos/{org}/{repo}/branches",
     org = org,
     repo = repo,
@@ -220,11 +195,11 @@ gh_get_branches <- function(org, repo, token = get_github_iat_pat()) {
 #'
 #' @keywords internal
 #' @noRd
-gh_get_issues <- function(org, repo, token = get_github_iat_pat()) {
+gh_get_issues <- function(org, repo, token = get_token()) {
   validate_org(org)
   validate_repo(repo)
 
-  gh_safe(
+  gh::gh(
     "GET /repos/{org}/{repo}/issues",
     org = org,
     repo = repo,
@@ -235,21 +210,65 @@ gh_get_issues <- function(org, repo, token = get_github_iat_pat()) {
   )
 }
 
+#' Internal helper: retrieve collaborators for a repository
+#'
+#' @description
+#' Retrieves collaborator metadata for a repository using the GitHub API.
+#' Returns the raw API response.
+#'
+#' @param org GitHub organisation or username.
+#' @param repo Repository name.
+#' @param token A GitHub installation access token or personal access token.
+#'
+#' @return A list of collaborator objects returned by the GitHub API, or `NULL`
+#'   if the request fails.
+#'
+#' @keywords internal
+#' @noRd
 gh_get_team_members <- function(
   org,
   team,
   role = "all",
-  token = get_github_iat_pat()
+  token = get_token()
 ) {
   validate_org(org)
   validate_team(team)
 
-  gh_safe(
+  gh::gh(
     "GET /orgs/{org}/teams/{team}/members",
     org = org,
     team = team,
     role = role,
     .limit = Inf,
+    token = token
+  )
+}
+
+#' Internal helper: retrieve collaborators for a repository
+#'
+#' @description
+#' Retrieves collaborator metadata for a repository using the GitHub API.
+#' Returns the raw API response.
+#'
+#' @param org GitHub organisation or username.
+#' @param repo Repository name.
+#' @param token A GitHub installation access token or personal access token.
+#'
+#' @return A list of collaborator objects returned by the GitHub API, or `NULL`
+#'   if the request fails.
+#'
+#' @keywords internal
+#' @noRd
+
+gh_get_repo_members <- function(
+  org,
+  repo,
+  token = get_token()
+) {
+  gh::gh(
+    "GET /repos/{org}/{repo}/collaborators",
+    org = org,
+    repo = repo,
     token = token
   )
 }

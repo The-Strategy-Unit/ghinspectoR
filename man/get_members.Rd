@@ -4,13 +4,13 @@
 \alias{get_members}
 \title{Retrieve organisation members}
 \usage{
-get_members(org, token = get_github_iat_pat())
+get_members(org, token = get_token(), limit = Inf)
 }
 \arguments{
 \item{org}{GitHub organisation name.}
 
 \item{token}{A GitHub installation access token or personal access token.
-Default uses `get_github_iat_pat()`}
+Default uses `get_token()`}
 }
 \value{
 list user objects returned by the GitHub API.

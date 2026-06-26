@@ -4,7 +4,7 @@
 \alias{get_team_members}
 \title{Retrieve members of a team}
 \usage{
-get_team_members(teams, org, token = get_github_iat_pat())
+get_team_members(teams, org, token = get_token())
 }
 \arguments{
 \item{teams}{usually from [get_teams] and [tidy_teams] functions containing
@@ -13,7 +13,7 @@ get_team_members(teams, org, token = get_github_iat_pat())
 \item{org}{GitHub organisation name.}
 
 \item{token}{A GitHub installation access token or personal access token.
-Default uses `get_github_iat_pat()`}
+Default uses `get_token()`}
 }
 \value{
 A list of team member objects.

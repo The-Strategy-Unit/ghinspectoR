@@ -4,7 +4,7 @@
 \alias{get_codeowners}
 \title{Retrieve CODEOWNERS files for one or more repositories}
 \usage{
-get_codeowners(repos, org, token = get_github_iat_pat())
+get_codeowners(repos, org, token = get_token())
 }
 \arguments{
 \item{repos}{A character vector of repository names, or a data frame with a
@@ -13,7 +13,7 @@ column named `repo_name`.}
 \item{org}{GitHub organisation or username.}
 
 \item{token}{A GitHub installation access token or personal access token.
-Default uses `get_github_iat_pat()`}
+Default uses `get_token()`}
 }
 \value{
 A named list where each element contains:

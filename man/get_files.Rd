@@ -32,7 +32,7 @@ of raw GitHub API responses.
 files_raw <- get_files(
   repos = c("repo1", "repo2"),
   org = "my-org",
-  path = "README.md"
+  file_name = "README.md"
 )
 }
 

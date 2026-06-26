@@ -112,7 +112,7 @@ tidy_single_file <- function(file_raw, repo_name) {
 #' files_raw <- get_files(
 #'   repos = c("repo1", "repo2"),
 #'   org = "my-org",
-#'   path = "README.md"
+#'   file_name = "README.md"
 #' )
 #' }
 #'
@@ -129,7 +129,7 @@ get_files <- function(
   purrr::map(
     repo_names,
     \(repo) {
-      get_single_file(
+      gh_get_file(
         org = org,
         repo = repo,
         file_name = file_name,

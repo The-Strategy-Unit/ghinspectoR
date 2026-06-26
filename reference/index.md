@@ -11,10 +11,6 @@
   : Retrieve CODEOWNERS files for one or more repositories
 - [`get_files()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_files.md)
   : Retrieve a specific file from multiple GitHub repositories
-- [`get_github_iat_pat()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_github_iat_pat.md)
-  : Generate a GitHub App installation access token
-- [`get_github_jwt()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_github_jwt.md)
-  : Generate a GitHub App JWT
 - [`get_issues()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_issues.md)
   : Retrieve issues for one or more GitHub repositories
 - [`get_members()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_members.md)
@@ -23,6 +19,8 @@
   : Retrieve outside collaborators
 - [`get_owners()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_owners.md)
   : Retrieve organisation owners
+- [`get_repo_members()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_repo_members.md)
+  : Retrieve collaborators for one or more repositories
 - [`get_repos()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_repos.md)
   : Retrieve repositories for a GitHub organisation or user
 - [`get_single_file()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_single_file.md)
@@ -31,6 +29,8 @@
   : Retrieve members of a team
 - [`get_teams()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_teams.md)
   : Retrieve organisation teams
+- [`get_token()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_token.md)
+  : Retrieve a GitHub personal access token
 - [`tidy_branches()`](https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_branches.md)
   : Convert branch list data into a tidy data frame
 - [`tidy_codeowners()`](https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_codeowners.md)
@@ -45,6 +45,8 @@
   : Convert list outside collaborator data into a tidy data frame
 - [`tidy_owners()`](https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_owners.md)
   : Convert organisation owner list into a tidy data frame
+- [`tidy_repo_members()`](https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_repo_members.md)
+  : Tidy collaborator data for one or more repositories
 - [`tidy_repos()`](https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_repos.md)
   : Convert repository list data into a tidy data frame
 - [`tidy_single_file()`](https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_single_file.md)

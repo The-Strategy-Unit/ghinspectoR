@@ -13,7 +13,7 @@ API response for the corresponding repository.
 ## Usage
 
 ``` r
-get_branches(repos, org, token = get_github_iat_pat())
+get_branches(repos, org, token = get_token())
 ```
 
 ## Arguments
@@ -32,8 +32,8 @@ get_branches(repos, org, token = get_github_iat_pat())
 - token:
 
   A GitHub installation access token or personal access token. The
-  default is \`get_github_iat_pat()\`, which should return a valid token
-  for accessing repositories through the GitHub App.
+  default is \`get_token()\`, which should return a valid token for
+  accessing repositories through the GitHub App.
 
 ## Value
 
@@ -56,8 +56,8 @@ column.
 ## See also
 
 \* \[get_repos()\] for retrieving repository names \* \[tidy_repos()\]
-for converting the list format to a data frame \*
-\[get_github_iat_pat()\] for obtaining the GitHub App installation token
+for converting the list format to a data frame \* \[get_token()\] for
+obtaining the GitHub App installation token
 
 ## Examples
 

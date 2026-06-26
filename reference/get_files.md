@@ -8,7 +8,7 @@ a named list of raw GitHub API responses.
 ## Usage
 
 ``` r
-get_files(repos, org, file_name, token = get_github_iat_pat())
+get_files(repos, org, file_name, token = get_token())
 ```
 
 ## Arguments
@@ -47,7 +47,7 @@ if (FALSE) { # \dontrun{
 files_raw <- get_files(
   repos = c("repo1", "repo2"),
   org = "my-org",
-  path = "README.md"
+  file_name = "README.md"
 )
 } # }
 ```

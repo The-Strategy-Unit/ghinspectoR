@@ -7,7 +7,7 @@ using the internal helper \[gh_get_file\].
 ## Usage
 
 ``` r
-get_codeowners(repos, org, token = get_github_iat_pat())
+get_codeowners(repos, org, token = get_token())
 ```
 
 ## Arguments
@@ -24,7 +24,7 @@ get_codeowners(repos, org, token = get_github_iat_pat())
 - token:
 
   A GitHub installation access token or personal access token. Default
-  uses \`get_github_iat_pat()\`
+  uses \`get_token()\`
 
 ## Value
 

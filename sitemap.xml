@@ -8,16 +8,16 @@
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_branches.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_codeowners.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_files.html</loc></url>
-<url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_github_iat_pat.html</loc></url>
-<url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_github_jwt.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_issues.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_members.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_outside_collaborators.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_owners.html</loc></url>
+<url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_repo_members.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_repos.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_single_file.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_team_members.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_teams.html</loc></url>
+<url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_token.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/index.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_branches.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_codeowners.html</loc></url>
@@ -26,6 +26,7 @@
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_members.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_outside_collaborators.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_owners.html</loc></url>
+<url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_repo_members.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_repos.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_single_file.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_team_members.html</loc></url>

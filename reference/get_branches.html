@@ -48,7 +48,7 @@ response for the corresponding repository."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Retrieve branch information from GitHub repositories</h1>
-      <small class="dont-index">Source: <a href="https://github.com/The-Strategy-Unit/ghinspectoR/blob/7-pkgdown/R/branches.R" class="external-link"><code>R/branches.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/The-Strategy-Unit/ghinspectoR/blob/v0.0.9000/R/branches.R" class="external-link"><code>R/branches.R</code></a></small>
       <div class="d-none name"><code>get_branches.Rd</code></div>
     </div>
 
@@ -65,7 +65,7 @@ response for the corresponding repository.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_branches</span><span class="op">(</span><span class="va">repos</span>, <span class="va">org</span>, token <span class="op">=</span> <span class="fu"><a href="get_github_iat_pat.html">get_github_iat_pat</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_branches</span><span class="op">(</span><span class="va">repos</span>, <span class="va">org</span>, token <span class="op">=</span> <span class="fu"><a href="get_token.html">get_token</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -85,7 +85,7 @@ username that owns the repositories.</p></dd>
 
 <dt id="arg-token">token<a class="anchor" aria-label="anchor" href="#arg-token"></a></dt>
 <dd><p>A GitHub installation access token or personal access token.
-The default is `get_github_iat_pat()`, which should return a valid token
+The default is `get_token()`, which should return a valid token
 for accessing repositories through the GitHub App.</p></dd>
 
 </dl></div>
@@ -108,7 +108,7 @@ which return a data frame containing a `repo_name` column.</p>
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>* [get_repos()] for retrieving repository names
 * [tidy_repos()] for converting the list format to a data frame
-* [get_github_iat_pat()] for obtaining the GitHub App installation token</p></div>
+* [get_token()] for obtaining the GitHub App installation token</p></div>
     </div>
 
     <div class="section level2">

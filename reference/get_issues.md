@@ -8,7 +8,7 @@ using \[tidy_techdebt_issues()\].
 ## Usage
 
 ``` r
-get_issues(repos, org, token = get_github_iat_pat())
+get_issues(repos, org, token = get_token())
 ```
 
 ## Arguments
@@ -26,7 +26,7 @@ get_issues(repos, org, token = get_github_iat_pat())
 - token:
 
   A GitHub installation access token or personal access token. The
-  default is \`get_github_iat_pat()\`.
+  default is \`get_token()\`.
 
 ## Value
 
@@ -43,4 +43,4 @@ Only open issues are retrieved. Pagination is handled automatically.
 ## See also
 
 \* \[tidy_techdebt_issues()\] for filtering and tidying issue data \*
-\[get_github_iat_pat()\] for obtaining the GitHub App installation token
+\[get_token()\] for obtaining the GitHub App installation token

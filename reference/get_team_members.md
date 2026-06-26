@@ -5,7 +5,7 @@ Retrieves all members of a specific GitHub organisation team.
 ## Usage
 
 ``` r
-get_team_members(teams, org, token = get_github_iat_pat())
+get_team_members(teams, org, token = get_token())
 ```
 
 ## Arguments
@@ -22,7 +22,7 @@ get_team_members(teams, org, token = get_github_iat_pat())
 - token:
 
   A GitHub installation access token or personal access token. Default
-  uses \`get_github_iat_pat()\`
+  uses \`get_token()\`
 
 ## Value
 

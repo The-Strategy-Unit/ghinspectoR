@@ -10,7 +10,7 @@ repositories
 ## Usage
 
 ``` r
-get_single_file(org, repo, file_name, token = get_github_iat_pat())
+get_single_file(org, repo, file_name, token = get_token())
 ```
 
 ## Arguments

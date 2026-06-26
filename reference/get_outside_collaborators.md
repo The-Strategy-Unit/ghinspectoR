@@ -7,7 +7,7 @@ organisation members.
 ## Usage
 
 ``` r
-get_outside_collaborators(org, token = get_github_iat_pat())
+get_outside_collaborators(org, token = get_token())
 ```
 
 ## Arguments
@@ -19,7 +19,7 @@ get_outside_collaborators(org, token = get_github_iat_pat())
 - token:
 
   A GitHub installation access token or personal access token. Default
-  uses \`get_github_iat_pat()\`
+  uses \`get_token()\`
 
 ## Value
 

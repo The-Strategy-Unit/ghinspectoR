@@ -5,7 +5,7 @@ Retrieves users with the \`admin\` role (organisation owners).
 ## Usage
 
 ``` r
-get_owners(org, token = get_github_iat_pat())
+get_owners(org, token = get_token())
 ```
 
 ## Arguments
@@ -17,7 +17,7 @@ get_owners(org, token = get_github_iat_pat())
 - token:
 
   A GitHub installation access token or personal access token. Default
-  uses \`get_github_iat_pat()\`
+  uses \`get_token()\`
 
 ## Value
 

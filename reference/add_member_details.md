@@ -11,19 +11,19 @@ profile endpoint (\`GET /users/{username}\`) for each login.
 ## Usage
 
 ``` r
-add_member_details(people, token = get_github_iat_pat())
+add_member_details(members, token = get_token())
 ```
 
 ## Arguments
 
-- people:
-
-  A tibble containing at least a \`login\` column
-
 - token:
 
   A GitHub installation access token or personal access token. Default
-  uses \`get_github_iat_pat()\`
+  uses \`get_token()\`
+
+- people:
+
+  A tibble containing at least a \`login\` column
 
 ## Value
 

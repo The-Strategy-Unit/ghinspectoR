@@ -44,7 +44,7 @@ endpoint (`GET /users/{username}`) for each login."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Details for members with GitHub profile information and members of organisation</h1>
-      <small class="dont-index">Source: <a href="https://github.com/The-Strategy-Unit/ghinspectoR/blob/7-pkgdown/R/members.R" class="external-link"><code>R/members.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/The-Strategy-Unit/ghinspectoR/blob/v0.0.9000/R/members.R" class="external-link"><code>R/members.R</code></a></small>
       <div class="d-none name"><code>add_member_details.Rd</code></div>
     </div>
 
@@ -59,20 +59,20 @@ endpoint (`GET /users/{username}`) for each login.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_member_details</span><span class="op">(</span><span class="va">people</span>, token <span class="op">=</span> <span class="fu"><a href="get_github_iat_pat.html">get_github_iat_pat</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_member_details</span><span class="op">(</span><span class="va">members</span>, token <span class="op">=</span> <span class="fu"><a href="get_token.html">get_token</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-people">people<a class="anchor" aria-label="anchor" href="#arg-people"></a></dt>
-<dd><p>A tibble containing at least a `login` column</p></dd>
-
-
-<dt id="arg-token">token<a class="anchor" aria-label="anchor" href="#arg-token"></a></dt>
+<dl><dt id="arg-token">token<a class="anchor" aria-label="anchor" href="#arg-token"></a></dt>
 <dd><p>A GitHub installation access token or personal access token.
-Default uses `get_github_iat_pat()`</p></dd>
+Default uses `get_token()`</p></dd>
+
+
+<dt id="arg-people">people<a class="anchor" aria-label="anchor" href="#arg-people"></a></dt>
+<dd><p>A tibble containing at least a `login` column</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -38,9 +38,9 @@ get_codeowners <- function(
   token = get_token()
 ) {
   validate_org(org)
-
-  # Normalise input to a character vector of repo names
   repo_names <- normalise_repo_names(repos)
+
+  safe_get_files <- purrr::possibly(get_files, otherwise = NULL)
 
   purrr::map(
     repo_names,
@@ -85,17 +85,19 @@ tidy_codeowners <- function(codeowner_list) {
   purrr::imap_dfr(
     codeowner_list,
     \(co, repo_name) {
-      if (is.null(co)) {
+      if (is.null(co) || is.null(co$content)) {
         return(tibble::tibble(
           repo_name = repo_name,
           has_codeowners = FALSE,
-          codeowners_url = NA_character_,
+          codeowners_url = if (!is.null(co$html_url)) {
+            co$html_url
+          } else {
+            NA_character_
+          },
           codeowners_text = NA_character_
         ))
       }
-
-      text <- rawToChar(base64enc::base64decode(co$content))
-
+      text <- rawToChar(base64enc::base64decode(gsub("\n", "", co$content)))
       tibble::tibble(
         repo_name = repo_name,
         has_codeowners = TRUE,

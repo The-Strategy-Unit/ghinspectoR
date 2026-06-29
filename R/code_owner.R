@@ -39,12 +39,17 @@ get_codeowners <- function(
 ) {
   validate_org(org)
   repo_names <- normalise_repo_names(repos)
-
-  safe_get_files <- purrr::possibly(get_files, otherwise = NULL)
-
+  safe_get_single_file <- purrr::possibly(get_single_file, otherwise = NULL)
   purrr::map(
     repo_names,
-    \(repo) get_files(org, repo, "CODEOWNERS", token)
+    \(repo) {
+      safe_get_single_file(
+        org = org,
+        repo = repo,
+        file_name = "CODEOWNERS",
+        token = token
+      )
+    }
   ) |>
     purrr::set_names(repo_names)
 }

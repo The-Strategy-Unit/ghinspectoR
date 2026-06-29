@@ -41,16 +41,20 @@ get_token <- function(env_var = "GH_PAT") {
   if (exists("token", envir = .pkg_env)) {
     return(.pkg_env$token)
   }
-
   # Posit Connect: use OAuth credentials
   if (nzchar(Sys.getenv("CONNECT_SERVER"))) {
     message("Running on Posit Connect using OAuth credentials")
     client <- connectapi::connect()
     creds <- connectapi::get_oauth_content_credentials(client)
-    token <- creds$access_token # or creds$token — the debug output will tell you
+    token <- creds$access_token
     .pkg_env$token <- token
     return(token)
   }
+  # Local: try keyring first
+  token <- tryCatch(
+    keyring::key_get(env_var),
+    error = function(e) NULL
+  )
   if (!is.null(token)) {
     message("Using keyring to access ", env_var)
   } else {
@@ -69,7 +73,6 @@ get_token <- function(env_var = "GH_PAT") {
       )
     }
   }
-
   .pkg_env$token <- token
   token
 }

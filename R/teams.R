@@ -22,7 +22,7 @@ get_teams <- function(org, token = get_token()) {
     "GET /orgs/{org}/teams",
     org = org,
     .limit = Inf,
-    token = token
+    .token = token
   )
 }
 

@@ -38,6 +38,12 @@ get_connect_user_token <- function(session) {
 }
 
 
+#' Title
+#'
+#' @param env_var default is GH_PAT
+#'
+#' @returns
+#' @export
 get_token <- function(env_var = "GH_PAT") {
   if (nzchar(Sys.getenv("CONNECT_SERVER"))) {
     return(get_connect_app_token())

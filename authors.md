@@ -7,7 +7,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/The-Strategy-Unit/ghinspectoR/blob/18-fix-codeowners/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/The-Strategy-Unit/ghinspectoR/blob/23-update-get-repos/DESCRIPTION)
 
 Turner Z (2026). *ghinspectoR: Function to assist with an audit of many
 repositories within a GitHub organisation account*. R package version

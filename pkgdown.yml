@@ -2,7 +2,7 @@ pandoc: 3.8.3
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles: {}
-last_built: 2026-06-30T09:53Z
+last_built: 2026-06-30T10:09Z
 urls:
   reference: https://the-strategy-unit.github.io/ghinspectoR/reference
   article: https://the-strategy-unit.github.io/ghinspectoR/articles

@@ -133,7 +133,7 @@ get_files <- function(
         org = org,
         repo = repo,
         file_name = file_name,
-        token = token
+        .token = token
       )
     }
   ) |>

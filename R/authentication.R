@@ -189,7 +189,9 @@ get_connect_app_token <- function() {
 #' @export
 get_connect_user_token <- function(session) {
   message("Using Posit Connect user OAuth credentials")
-  connectapi::get_oauth_user_credentials(session)
+  client <- connectapi::connect()
+  credentials <- connectapi::get_oauth_content_credentials(client, session)
+  credentials$access_token
 }
 
 #' Get a GitHub token, selecting the source automatically

@@ -146,10 +146,16 @@ blog](https://the-strategy-unit.github.io/data_science/blogs/posts/2025-04-30_us
   : Retrieve branch information from GitHub repositories
 - [`get_codeowners()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_codeowners.md)
   : Retrieve CODEOWNERS files for one or more repositories
+- [`get_connect_app_token()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_connect_app_token.md)
+  : Get a GitHub token via Posit Connect's application OAuth credentials
+- [`get_connect_user_token()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_connect_user_token.md)
+  : Get a GitHub token via Posit Connect's per-user OAuth credentials
 - [`get_files()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_files.md)
   : Retrieve a specific file from multiple GitHub repositories
 - [`get_issues()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_issues.md)
   : Retrieve issues for one or more GitHub repositories
+- [`get_local_token()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_local_token.md)
+  : Get a GitHub token for local development
 - [`get_members()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_members.md)
   : Retrieve organisation members
 - [`get_outside_collaborators()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_outside_collaborators.md)
@@ -167,7 +173,7 @@ blog](https://the-strategy-unit.github.io/data_science/blogs/posts/2025-04-30_us
 - [`get_teams()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_teams.md)
   : Retrieve organisation teams
 - [`get_token()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_token.md)
-  : Retrieve a GitHub personal access token
+  : Get a GitHub token, selecting the source automatically
 - [`tidy_branches()`](https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_branches.md)
   : Convert branch list data into a tidy data frame
 - [`tidy_codeowners()`](https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_codeowners.md)

@@ -1,0 +1,72 @@
+# Get a GitHub token for local development
+
+Retrieves a GitHub Personal Access Token (PAT) for use outside of Posit
+Connect, such as when running scripts or rendering reports interactively
+on a local machine. The token is looked up from three sources in turn,
+stopping at the first one found: the system keyring, a Git credential
+already known to \`gitcreds\` (for example set up via the \`gh\` CLI or
+\`usethis::create_github_token()\`), and finally an environment variable
+(typically set in \`.Renviron\`).
+
+## Usage
+
+``` r
+get_local_token(env_var = "GH_PAT")
+```
+
+## Arguments
+
+- env_var:
+
+  Character. The name of the keyring entry and/or environment variable
+  holding the GitHub PAT. Defaults to \`"GH_PAT"\`.
+
+## Value
+
+A character string containing the GitHub PAT.
+
+## Details
+
+This function is intended for \*\*local use only\*\*. On Posit Connect,
+use \[get_connect_app_token()\] (for non-interactive content such as
+Quarto reports) or \[get_connect_user_token()\] (for Shiny apps using
+per-user OAuth) instead. See \[get_token()\] for a wrapper that selects
+the appropriate function automatically based on execution context.
+
+Credentials are checked in the following order:
+
+1\. \*\*\`keyring\`\*\* — a secret explicitly stored under \`env_var\`
+via \`keyring::key_set()\`. This is the most deliberate and most secure
+option, since OS-level credential stores (macOS Keychain, Windows
+Credential Manager) encrypt secrets at rest. 2. \*\*\`gitcreds\`\*\* — a
+credential already known to Git tooling, typically discovered via the
+same OS credential store used by \`keyring\`. This will pick up a token
+if you have previously authenticated \`git\` on the command line (CLI),
+run \`gh auth login\`, or use \`usethis::create_github_token()\`. Note
+that a token found this way may have broader scopes than strictly
+required for this package's use, since it was likely created for general
+Git use rather than specifically for this package. 3. \*\*Environment
+variable / \`.Renviron\`\*\* — a plain-text fallback. This is the least
+secure of the three options, since the value is stored unencrypted on
+disk. \*\*Take care that any file containing the token (such as
+\`.Renviron\`) is never committed to version control or synced via cloud
+storage (such as Google Drive, Dropbox).\*\* Add the file to
+\`.gitignore\` before saving any secrets including a token, and prefer
+\`keyring\` or \`gitcreds\` wherever possible.
+
+## See also
+
+\[get_token()\], \[get_connect_app_token()\],
+\[get_connect_user_token()\]
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+# Looks up GH_PAT in keyring, then gitcreds, then Sys.getenv("GH_PAT")
+token <- get_local_token()
+
+# Use a differently named credential
+token <- get_local_token("MY_OTHER_GH_PAT")
+} # }
+```

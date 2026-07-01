@@ -1,0 +1,63 @@
+# Get a GitHub token via Posit Connect's per-user OAuth credentials
+
+Retrieves a GitHub OAuth token tied to the individual viewer of a Shiny
+application, rather than to the application itself. This is the
+appropriate credential type for interactive Shiny apps where each user
+should authenticate with, and act as, their own GitHub identity.
+
+## Usage
+
+``` r
+get_connect_user_token(session)
+```
+
+## Arguments
+
+- session:
+
+  The Shiny \`session\` object, as made available inside a Shiny server
+  function (\`function(input, output, session)\`).
+
+## Value
+
+A character string containing the viewer's OAuth access token.
+
+## Details
+
+This function calls \[connectapi::get_oauth_content_credentials()\] to
+obtain a token scoped to the currently logged-in viewer of a Shiny app
+deployed to Posit Connect, using a GitHub OAuth integration configured
+for per-user (viewer) authentication.
+
+\*\*This is not the same as an application credential.\*\* Because the
+\`session\` object only exists within a running Shiny session, this
+function cannot be called from non-interactive content such as a Quarto
+report. For that use case, see \[get_connect_app_token()\].
+
+Because each user's token is specific to their own session, this
+function should be called fresh for each user/session rather than cached
+at the package or application level. A typical pattern is to wrap the
+call in a \`reactive()\`:
+
+“\`r server \<- function(input, output, session) { token \<- reactive({
+get_connect_user_token(session) }) } “\`
+
+## See also
+
+\[get_token()\], \[get_local_token()\], \[get_connect_app_token()\]
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+server <- function(input, output, session) {
+  token <- reactive({
+    get_connect_user_token(session)
+  })
+
+  output$repos <- renderTable({
+    get_repos(org = "my-org", token = token())
+  })
+}
+} # }
+```

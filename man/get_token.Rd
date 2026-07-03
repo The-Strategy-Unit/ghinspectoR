@@ -2,46 +2,46 @@
 % Please edit documentation in R/authentication.R
 \name{get_token}
 \alias{get_token}
-\title{Retrieve a GitHub personal access token}
+\title{Get a GitHub token, selecting the source automatically}
 \usage{
 get_token(env_var = "GH_PAT")
 }
 \arguments{
-\item{env_var}{A string giving the name of the credential to look up in the
-keyring and environment. Defaults to `"GH_PAT"`. Override this if your
-project uses a different credential name.}
+\item{env_var}{Character. The name of the keyring entry and/or
+environment variable to use when falling back to [get_local_token()].
+Defaults to `"GH_PAT"`. Ignored when running on Posit Connect.}
 }
 \value{
-A string containing the GitHub PAT, or a Posit Connect OAuth
-  credentials object when running on Connect.
+A character string containing a GitHub token.
 }
 \description{
-Retrieves a GitHub personal access token (PAT) from one of several sources,
-depending on the environment in which the code is running. Sources are tried
-in the following order:
+A convenience wrapper that selects an appropriate GitHub token depending
+on where code is running. On Posit Connect, it returns an application
+(content) credential via [get_connect_app_token()]. Outside of Posit
+Connect, it returns a locally stored credential via [get_local_token()].
+}
+\details{
+This function is intended for **non-interactive contexts**, such as
+Quarto reports, scripts, or scheduled jobs, where there is no individual
+"viewer" to authenticate as. It detects whether it is running on Posit
+Connect via the `CONNECT_SERVER` environment variable.
 
-1. **Posit Connect** — if the `CONNECT_SERVER` environment variable is set,
-   OAuth content credentials are retrieved via `connectapi`.
-2. **Keyring** — if a secret matching `env_var` exists in the system
-   keyring, it is returned. This is the preferred local approach.
-3. **Environment variable** — if `env_var` is set in the global or
-   project-level `.Renviron`, that value is returned.
-
-If none of these sources yields a token, the function stops with a message
-guiding the user to set credentials via `keyring::key_set()` or `.Renviron`.
+This function deliberately does **not** dispatch to
+[get_connect_user_token()], since that function requires a Shiny
+`session` object that only exists inside an interactive Shiny
+application. Shiny apps requiring per-user GitHub authentication should
+call [get_connect_user_token()] directly from the server function rather
+than relying on this wrapper.
 }
 \examples{
 \dontrun{
-# Use the default credential name
+# Works both locally and when deployed as a Quarto report on Posit Connect
 token <- get_token()
-
-# Use a project-specific credential name
-token <- get_token(env_var = "GH_PAT_MYPROJECT")
+repos <- get_repos(org = "my-org", token = token)
 }
 
 }
 \seealso{
-[keyring::key_set()] to store credentials in the keyring,
-[connectapi::get_oauth_content_credentials()] for Posit Connect
-authentication.
+[get_local_token()], [get_connect_app_token()],
+  [get_connect_user_token()]
 }

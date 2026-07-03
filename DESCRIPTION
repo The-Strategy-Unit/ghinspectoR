@@ -22,9 +22,7 @@ Imports:
     dplyr,
     gh,
     gitcreds,
-    httr2,
     lubridate,
-    openssl,
     purrr,
     rlang,
     tibble

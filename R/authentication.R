@@ -231,9 +231,14 @@ get_connect_user_token <- function(session) {
 #' }
 #'
 #' @export
-get_token <- function(env_var = "GH_PAT") {
-  if (nzchar(Sys.getenv("CONNECT_SERVER"))) {
-    return(get_connect_app_token())
+get_token <- function() {
+  if (
+    identical(Sys.getenv("POSIT_PRODUCT"), "CONNECT") &&
+      nzchar(Sys.getenv("CONNECT_SERVER"))
+  ) {
+    client <- connectapi::connect()
+    connectapi::get_oauth_content_credentials(client)
+  } else {
+    get_local_token()
   }
-  get_local_token(env_var)
 }

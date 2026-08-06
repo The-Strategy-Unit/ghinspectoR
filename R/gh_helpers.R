@@ -224,18 +224,19 @@ gh_get_issues <- function(org, repo, token = get_token()) {
   )
 }
 
-#' Internal helper: retrieve collaborators for a repository
+#' Internal helper: retrieve members of a GitHub team
 #'
 #' @description
-#' Retrieves collaborator metadata for a repository using the GitHub API.
-#' Returns the raw API response.
+#' Retrieves member metadata for a team within a GitHub organisation using
+#' the GitHub API. Returns the raw API response.
 #'
-#' @param org GitHub organisation or username.
-#' @param repo Repository name.
+#' @param org GitHub organisation name.
+#' @param team Team slug within the organisation.
+#' @param role Filter members by role: `"member"`, `"maintainer"`, or
+#'   `"all"` (default).
 #' @param token A GitHub installation access token or personal access token.
 #'
-#' @return A list of collaborator objects returned by the GitHub API, or `NULL`
-#'   if the request fails.
+#' @return A list of member objects returned by the GitHub API.
 #'
 #' @keywords internal
 #' @noRd
@@ -247,7 +248,6 @@ gh_get_team_members <- function(
 ) {
   validate_org(org)
   validate_team(team)
-
   gh::gh(
     "GET /orgs/{org}/teams/{team}/members",
     org = org,
@@ -258,6 +258,30 @@ gh_get_team_members <- function(
   )
 }
 
+#' Internal helper: retrieve details for a single member
+#'
+#' @description
+#' Retrieves full profile details for a single GitHub user using the
+#' GitHub API. Returns the raw API response.
+#'
+#' @param username GitHub username (login).
+#' @param token A GitHub installation access token or personal access token.
+#'
+#' @return A list of user profile fields returned by the GitHub API, or
+#'   `NULL` if the request fails.
+#'
+#' @keywords internal
+#' @noRd
+gh_get_member_details <- function(
+  username,
+  token = get_token()
+) {
+  purrr::possibly(gh::gh, otherwise = NULL)(
+    "GET /users/{username}",
+    username = username,
+    .token = token
+  )
+}
 #' Internal helper: retrieve collaborators for a repository
 #'
 #' @description

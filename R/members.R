@@ -171,79 +171,73 @@ tidy_outside_collaborators <- function(list) {
     dplyr::mutate(login = tolower(login))
 }
 
-#' Details for members with GitHub profile information and members of organisation
+#' Retrieve member details
 #'
 #' @description
-#' Adds additional profile information (such as a user's
-#' display name, company, and location) to a data frame created by
-#' [tidy_members], [tidy_owners] or [tidy_outside_collaborators].
+#' Retrieves details for multiple members of a GitHub organisation.
 #'
-#' The GitHub organisation endpoints do not return profile fields such as
-#' `name`, so this function retrieves them by calling the GitHub user profile
-#' endpoint (`GET /users/\{username\}`) for each login.
-#'
-#' @param people A tibble containing at least a `login` column
+#' @param usernames Character vector of GitHub usernames (e.g. from
+#'   `tidy_members()$login`).
 #' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_token()`
+#'   Default uses `get_token()`.
 #'
-#' @details
-#' GitHub's organisation-level APIs return only minimal user information.
-#' To obtain profile data, this function performs an additional API
-#' request for each user via the `/users/\{username\}` endpoint. The returned
-#' fields are merged back into the input data frame
-#'
-#' The following fields are added:
-#' * `name` — the user's display name,
-#' * `company` — the user's listed organisation,
-#' * `location` — the user's location.
-#'
-#' Missing fields are recorded as `NA`.
-#'
-#' @return tibble containing the original columns plus additional profile fields.
-#'
-#' @seealso
-#' * [combine_org_people()]
-#' * [tidy_members()]
-#' * [tidy_owners()]
-#' * [tidy_outside_collaborators()]
+#' @return A list of user objects returned by the GitHub API, one per
+#'   username.
+#' @seealso [tidy_member_details()]
 #'
 #' @examples
 #' \dontrun{
-#' members <- get_members(org) |> tidy_members() |> add_member_details()
-#' collaborators <- get_outside_collaborators(org) |>
-#' tidy_outside_collaborators() |>
-#'   add_member_details()
-#' owners <- get_owners(org) |> tidy_owners() |> add_member_details()
+#' members <- get_members(org = "my-org") |>
+#'   tidy_members()
 #'
+#' get_member_details(usernames = members$login)
 #' }
 #'
 #' @export
-add_member_details <- function(
-  members,
+get_member_details <- function(
+  usernames,
   token = get_token()
 ) {
-  profiles <- purrr::map(
-    members$login,
-    \(u) {
-      gh::gh(
-        "GET /users/{username}",
-        username = u,
-        .token = get_token()
-      )
-    }
+  purrr::map(
+    usernames,
+    gh_get_member_details,
+    token = token
   )
+}
 
-  members$name <- purrr::map_chr(profiles, "name", .default = NA_character_)
-  members$company <- purrr::map_chr(
-    profiles,
-    "company",
-    .default = NA_character_
-  )
-  members$location <- purrr::map_chr(
-    profiles,
-    "location",
-    .default = NA_character_
-  )
+#' Tidy member details
+#'
+#' @description
+#' Converts a list of raw GitHub user objects (as returned by
+#' [get_member_details()]) into a tidy tibble.
+#'
+#' @param members A list of user objects, as returned by
+#'   [get_member_details()].
+#'
+#' @returns A tibble with one row per member and columns `login`, `name`,
+#'   `company`, `location`, `email`, and `bio`. Members that failed to
+#'   fetch (`NULL`) are dropped.
+#' @seealso [get_member_details()]
+#'
+#' @examples
+#' \dontrun{
+#' members <- get_members(org = "my-org") |>
+#'   tidy_members()
+#'
+#' get_member_details(usernames = members$login) |>
+#'   tidy_member_details()
+#' }
+#'
+#' @export
+tidy_member_details <- function(members) {
+  members <- purrr::compact(members)
 
-  members
+  tibble::tibble(
+    login = purrr::map_chr(members, "login", .default = NA_character_),
+    name = purrr::map_chr(members, "name", .default = NA_character_),
+    company = purrr::map_chr(members, "company", .default = NA_character_),
+    location = purrr::map_chr(members, "location", .default = NA_character_),
+    email = purrr::map_chr(members, "email", .default = NA_character_),
+    bio = purrr::map_chr(members, "bio", .default = NA_character_)
+  )
 }

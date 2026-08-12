@@ -8,9 +8,8 @@
 #' Used in the [get_files()] function that retrieves files across many
 #' repositories
 #'
-#' @param org The GitHub organisation name.
 #' @param repo A single repository name.
-#' @param token A GitHub installation access token or personal access token.
+#' @inheritParams shared_params token org
 #' @param file_name string Detail the name of the file being retrieved and
 #' include the file extension, for example README.md or README.Rmd.
 #'
@@ -93,10 +92,7 @@ tidy_single_file <- function(file_raw, repo_name) {
 #' data frame containing a `repo_name` column. The function returns a named list
 #' of raw GitHub API responses.
 #'
-#' @param repos A character vector of repository names or a data frame with a
-#'   `repo_name` column.
-#' @param org The GitHub organisation name.
-#' @param token A GitHub installation access token or personal access token.
+#' @inheritParams shared_params token org repos
 #' @param file_name string Detail the name of the file being retrieved and
 #' include the file extension, for example README.md or README.Rmd.
 #'

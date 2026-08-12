@@ -4,7 +4,7 @@
 #' Checks that the `org` argument is a single character string. Used by all
 #' exported GitHub functions to ensure consistent input validation.
 #'
-#' @param org A GitHub organisation or username.
+#' @inheritParams get_token org
 #'
 #' @return Nothing. Throws an error if validation fails.
 #'
@@ -73,11 +73,9 @@ validate_team <- function(team) {
 #' The returned object includes an additional field:
 #' * `requested_path` — the path where the file was found.
 #'
-#' @param org GitHub organisation or username.
-#' @param repo Repository name.
 #' @param path File name to search for (for example `"CODEOWNERS"`).
 #' @param file_name File name to search for (for example `"CODEOWNERS"`).
-#' @param token A GitHub installation access token or personal access token.
+#' @inheritParams shared_params token org repo
 #' @param try_common_locations If `TRUE` (the default), the function checks
 #'   common alternative locations (`.github/`, `docs/`, lowercase) in addition
 #'   to the exact path. Set to `FALSE` when the exact path is known.
@@ -134,9 +132,7 @@ gh_get_file <- function(
 #' @description
 #' Retrieves metadata related to commits for repositories
 #'
-#' @param org GitHub organisation or username.
-#' @param repo Repository name.
-#' @param token A GitHub installation access token or personal access token.
+#' @inheritParams shared_params token org repo
 #' @param sha SHA detail provided from [get_branches()] and [tidy_branches()]
 #'
 #' @return A GitHub API response containing commit metadata, or `NULL`.
@@ -162,9 +158,7 @@ gh_get_commit <- function(org, repo, sha = sha, token = get_token()) {
 #' Retrieves branch metadata for a repository using the GitHub API. Returns the
 #' raw API response.
 #'
-#' @param org GitHub organisation or username.
-#' @param repo Repository name.
-#' @param token A GitHub installation access token or personal access token.
+#' @inheritParams shared_params token org repo
 #'
 #' @return A list of branch objects returned by the GitHub API, or `NULL` if the
 #'   request fails.
@@ -191,9 +185,7 @@ gh_get_branches <- function(org, repo, token = get_token()) {
 #' [get_issues] and should not be called directly
 #' by users.
 #'
-#' @param org GitHub organisation or username.
-#' @param repo Repository name.
-#' @param token A GitHub installation access token or personal access token.
+#' @inheritParams shared_params token org repo
 #'
 #' @details
 #' The function queries the GitHub API endpoint:
@@ -230,9 +222,7 @@ gh_get_issues <- function(org, repo, token = get_token()) {
 #' Retrieves collaborator metadata for a repository using the GitHub API.
 #' Returns the raw API response.
 #'
-#' @param org GitHub organisation or username.
-#' @param repo Repository name.
-#' @param token A GitHub installation access token or personal access token.
+#' @inheritParams shared_params token org repo
 #'
 #' @return A list of collaborator objects returned by the GitHub API, or `NULL`
 #'   if the request fails.
@@ -264,9 +254,7 @@ gh_get_team_members <- function(
 #' Retrieves collaborator metadata for a repository using the GitHub API.
 #' Returns the raw API response.
 #'
-#' @param org GitHub organisation or username.
-#' @param repo Repository name.
-#' @param token A GitHub installation access token or personal access token.
+#' @inheritParams shared_params token org repo
 #'
 #' @return A list of collaborator objects returned by the GitHub API, or `NULL`
 #'   if the request fails.

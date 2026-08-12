@@ -3,11 +3,7 @@
 #' @description
 #' Retrieves all members of a GitHub organisation.
 #'
-#' @param org GitHub organisation name.
-#' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_token()`
-#' @param limit  The maximum number members to retrieve. The default is
-#'   `Inf`, which retrieves all.
+#' @inheritParams shared_params token org
 #'
 #' @return list user objects returned by the GitHub API.
 #' @seealso [tidy_members()]
@@ -61,10 +57,7 @@ tidy_members <- function(list) {
 #' @description
 #' Retrieves users with the `admin` role (organisation owners).
 #'
-#' @param org GitHub organisation name.
-#' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_token()`
-#'
+#' @inheritParams shared_params token org
 #' @return list user objects returned by the GitHub API.
 #'
 #' @examples
@@ -119,9 +112,7 @@ tidy_owners <- function(list) {
 #' collaborators have access to specific repositories but are not organisation
 #' members.
 #'
-#' @param org GitHub organisation name.
-#' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_token()`
+#' @inheritParams shared_params token org
 #'
 #' @return list user objects returned by the GitHub API.
 #'
@@ -185,8 +176,7 @@ tidy_outside_collaborators <- function(list) {
 #' endpoint (`GET /users/\{username\}`) for each login.
 #'
 #' @param members A tibble containing at least a `login` column
-#' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_token()`
+#' @inheritParams shared_params token
 #'
 #' @details
 #' GitHub's organisation-level APIs return only minimal user information.

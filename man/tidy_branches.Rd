@@ -12,7 +12,7 @@ tidy_branches(branch_list, org, stale_after_days = 90, token = get_token())
 repository.}
 
 \item{org}{A single character string giving the GitHub organisation or
-username that owns the repositories.}
+username whose repositories should be retrieved.}
 
 \item{stale_after_days}{A number giving the threshold for marking a branch as
 stale. Branches with no commits more recent than this number of days are

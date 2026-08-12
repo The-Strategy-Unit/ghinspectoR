@@ -11,11 +11,7 @@
 #' CODEOWNERS file exists for a repository, the corresponding list element is
 #' `NULL`.
 #'
-#' @param repos A character vector of repository names, or a data frame with a
-#'   column named `repo_name`.
-#' @param org GitHub organisation or username.
-#' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_token()`
+#' @inheritParams shared_params token org repos
 #'
 #' @return
 #' A named list where each element contains:

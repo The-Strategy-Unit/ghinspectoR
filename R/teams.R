@@ -3,9 +3,7 @@
 #' @description
 #' Retrieves teams (grouped members) within a GitHub organisation.
 #'
-#' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_token()`
-#' @param org GitHub organisation name.
+#' @inheritParams shared_params token org
 #'
 #' @examples
 #' \dontrun{
@@ -66,9 +64,7 @@ tidy_teams <- function(team_list) {
 #' @description
 #' Retrieves all members of a specific GitHub organisation team.
 #'
-#' @param org GitHub organisation name.
-#' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_token()`
+#' @inheritParams shared_params token org
 #' @param teams usually from [get_teams] and [tidy_teams] functions containing
 #' `team_slug` column
 #'

@@ -6,15 +6,7 @@
 #' responses, which can be converted into a tidy data frame using
 #' [tidy_techdebt_issues()].
 #'
-#' @param repos A character vector of repository names, or a data frame with a
-#'   column named `repo_name`.
-#'
-#' @param org A single character string giving the GitHub organisation or
-#'   username that owns the repositories.
-#'
-#' @param token A GitHub installation access token or personal access token.
-#'   The default is `get_token()`.
-#'
+#' @inheritParams shared_params token org repos
 #' @details
 #' The function queries the GitHub API endpoint:
 #' `GET /repos/\{org\}/\{repo\}/issues`

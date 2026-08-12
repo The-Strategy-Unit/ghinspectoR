@@ -310,3 +310,138 @@ gh_get_repo_members <- function(
     .token = token
   )
 }
+
+gh_get_issue_fields <- function(
+  org,
+  repo,
+  issue_number,
+  token = get_token()
+) {
+  validate_org(org)
+
+  gh::gh(
+    "GET /repos/{owner}/{repo}/issues/{issue_number}/issue-field-values",
+    owner = org,
+    repo = repo,
+    issue_number = issue_number,
+    .token = token
+  )
+}
+
+
+gh_get_project_details <- function(
+  org,
+  project_number,
+  token
+) {
+  query <- paste0(
+    '
+{
+  organization(login: "',
+    org,
+    '") {
+
+    projectV2(number: ',
+    project_number,
+    ') {
+
+      items(first: 100) {
+
+        nodes {
+
+          id
+
+          content {
+
+            __typename
+
+            ... on Issue {
+
+              number
+
+              title
+
+              state
+
+              repository {
+                name
+              }
+
+              assignees(first: 20) {
+                nodes {
+                  login
+                }
+              }
+
+              labels(first: 20) {
+                nodes {
+                  name
+                }
+              }
+            }
+          }
+
+          fieldValues(first: 100) {
+
+            nodes {
+
+              __typename
+
+              ... on ProjectV2ItemFieldTextValue {
+
+                text
+
+                field {
+                  ... on ProjectV2FieldCommon {
+                    name
+                  }
+                }
+              }
+
+              ... on ProjectV2ItemFieldSingleSelectValue {
+
+                name
+
+                field {
+                  ... on ProjectV2SingleSelectField {
+                    name
+                  }
+                }
+              }
+
+              ... on ProjectV2ItemFieldNumberValue {
+
+                number
+
+                field {
+                  ... on ProjectV2FieldCommon {
+                    name
+                  }
+                }
+              }
+
+              ... on ProjectV2ItemFieldDateValue {
+
+                date
+
+                field {
+                  ... on ProjectV2FieldCommon {
+                    name
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+'
+  )
+
+  gh::gh_gql(
+    query,
+    .token = token
+  )
+}

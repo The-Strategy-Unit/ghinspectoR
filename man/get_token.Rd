@@ -4,7 +4,7 @@
 \alias{get_token}
 \title{Get a GitHub token, selecting the source automatically}
 \usage{
-get_token(env_var = "GH_PAT")
+get_token()
 }
 \arguments{
 \item{env_var}{Character. The name of the keyring entry and/or

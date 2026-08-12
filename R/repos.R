@@ -31,6 +31,7 @@
 #' @export
 get_repos <- function(
   org,
+  token = get_token(),
   limit = Inf
 ) {
   validate_org(org)
@@ -40,7 +41,7 @@ get_repos <- function(
     org = org,
     .limit = limit,
     .per_page = 100,
-    .token = get_token(),
+    .token = token,
     progress = TRUE
   )
 }

@@ -152,7 +152,7 @@ gh_get_commit <- function(org, repo, sha = sha, token = get_token()) {
     org = org,
     repo = repo,
     sha = sha,
-    token = token
+    .token = token
   )
 }
 
@@ -179,7 +179,7 @@ gh_get_branches <- function(org, repo, token = get_token()) {
     "GET /repos/{org}/{repo}/branches",
     org = org,
     repo = repo,
-    token = token
+    .token = token
   )
 }
 
@@ -220,7 +220,7 @@ gh_get_issues <- function(org, repo, token = get_token()) {
     state = "open",
     .per_page = 100,
     .limit = Inf,
-    token = token
+    .token = token
   )
 }
 
@@ -254,7 +254,7 @@ gh_get_team_members <- function(
     team = team,
     role = role,
     .limit = Inf,
-    token = token
+    .token = token
   )
 }
 
@@ -283,6 +283,6 @@ gh_get_repo_members <- function(
     "GET /repos/{org}/{repo}/collaborators",
     org = org,
     repo = repo,
-    token = token
+    .token = token
   )
 }

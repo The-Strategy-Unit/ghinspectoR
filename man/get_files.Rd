@@ -4,7 +4,13 @@
 \alias{get_files}
 \title{Retrieve a specific file from multiple GitHub repositories}
 \usage{
-get_files(repos, org, file_name, token = get_token())
+get_files(
+  repos,
+  org,
+  file_name,
+  token = get_token(),
+  try_common_locations = TRUE
+)
 }
 \arguments{
 \item{repos}{A character vector of repository names or a data frame with a
@@ -16,6 +22,10 @@ get_files(repos, org, file_name, token = get_token())
 include the file extension, for example README.md or README.Rmd.}
 
 \item{token}{A GitHub installation access token or personal access token.}
+
+\item{try_common_locations}{If `TRUE` (the default), the function checks
+common alternative locations (`.github/`, `docs/`, lowercase) in addition
+to the exact path. Set to `FALSE` when the exact path is known.}
 }
 \value{
 A named list where each element contains the raw API response for the file

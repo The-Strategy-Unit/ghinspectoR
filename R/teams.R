@@ -95,7 +95,7 @@ get_team_members <- function(teams, org, token = get_token()) {
 
   purrr::map(
     team_slugs,
-    \(team_slug) gh_get_team_members(org, team_slug, "all", token)
+    \(team_slug) gh_get_team_members(org, team_slug, token)
   ) |>
     rlang::set_names(team_slugs)
 }

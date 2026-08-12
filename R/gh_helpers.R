@@ -75,12 +75,9 @@ validate_team <- function(team) {
 #'
 #' @param org GitHub organisation or username.
 #' @param repo Repository name.
-#' @param path File name to search for (for example `"CODEOWNERS"`).
 #' @param file_name File name to search for (for example `"CODEOWNERS"`).
 #' @param token A GitHub installation access token or personal access token.
-#' @param try_common_locations If `TRUE` (the default), the function checks
-#'   common alternative locations (`.github/`, `docs/`, lowercase) in addition
-#'   to the exact path. Set to `FALSE` when the exact path is known.
+#' @inheritParams get_files try_common_locations
 #'
 #' @return A GitHub API response containing file metadata and base64-encoded
 #'   content, or `NULL` if the file does not exist in any of the locations
@@ -231,9 +228,8 @@ gh_get_issues <- function(org, repo, token = get_token()) {
 #' Returns the raw API response.
 #'
 #' @param org GitHub organisation or username.
-#' @param repo Repository name.
 #' @param token A GitHub installation access token or personal access token.
-#'
+#' @param team String GitHub team name.
 #' @return A list of collaborator objects returned by the GitHub API, or `NULL`
 #'   if the request fails.
 #'
@@ -242,7 +238,6 @@ gh_get_issues <- function(org, repo, token = get_token()) {
 gh_get_team_members <- function(
   org,
   team,
-  role = "all",
   token = get_token()
 ) {
   validate_org(org)
@@ -252,7 +247,6 @@ gh_get_team_members <- function(
     "GET /orgs/{org}/teams/{team}/members",
     org = org,
     team = team,
-    role = role,
     .limit = Inf,
     .token = token
   )

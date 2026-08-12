@@ -133,7 +133,7 @@ tidy_team_members <- function(team_members_list) {
         tibble::tibble(team_slug = team_slug, login = NA_character_)
       } else {
         tibble::tibble(
-          team_slug = rep(team_slug, length(members)),
+          team_slug = team_slug,
           login = purrr::map_chr(members, "login")
         )
       }

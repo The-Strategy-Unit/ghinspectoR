@@ -4,10 +4,10 @@
 \alias{tidy_codeowners}
 \title{Convert CODEOWNERS API responses into a tidy data frame}
 \usage{
-tidy_codeowners(codeowner_list)
+tidy_codeowners(list)
 }
 \arguments{
-\item{codeowner_list}{A named list returned by [get_codeowners].}
+\item{list}{A list produced from the corresponding get_ function.}
 }
 \value{
 A data frame with columns:

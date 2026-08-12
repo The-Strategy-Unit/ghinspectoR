@@ -30,7 +30,6 @@ get_issues <- function(
 ) {
   validate_org(org)
 
-  # Normalise input to a character vector of repo names
   repo_names <- normalise_repo_names(repos)
 
   purrr::map(
@@ -51,7 +50,7 @@ get_issues <- function(
 #' labels. Filtering (for example, identifying tech debt issues) should be done
 #' in downstream analysis.
 #'
-#' @param issue_list A named list of issue objects returned by [get_issues()].
+#' @inheritParams shared_params list
 #'
 #' @details
 #' The function extracts the issue number, title, and labels from each issue
@@ -79,9 +78,9 @@ get_issues <- function(
 #' }
 #'
 #' @export
-tidy_issues <- function(issue_list) {
+tidy_issues <- function(list) {
   purrr::imap_dfr(
-    issue_list,
+    list,
     \(issues, repo_name) {
       if (is.null(issues) || length(issues) == 0) {
         return(tibble::tibble(

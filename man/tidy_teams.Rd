@@ -4,10 +4,10 @@
 \alias{tidy_teams}
 \title{Convert team list into a tidy data frame}
 \usage{
-tidy_teams(team_list)
+tidy_teams(list)
 }
 \arguments{
-\item{team_list}{A list of team objects.}
+\item{list}{A list produced from the corresponding get_ function.}
 }
 \value{
 data frame

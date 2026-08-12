@@ -10,6 +10,7 @@
 #' @param repos A character vector of repository names, or a data frame with a
 #'   column named `repo_name`.
 #'   If a data frame is supplied without this column, an error is raised.
+#' @param list A list produced from the corresponding get_ function.
 #'
 #'
 #' @keywords internal

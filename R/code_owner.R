@@ -61,7 +61,7 @@ get_codeowners <- function(
 #' * `codeowners_path = NA`
 #' * `codeowners_text = NA`
 #'
-#' @param codeowner_list A named list returned by [get_codeowners].
+#' @inheritParams shared_params list
 #'
 #' @return
 #' A data frame with columns:
@@ -77,9 +77,9 @@ get_codeowners <- function(
 #' }
 #'
 #' @export
-tidy_codeowners <- function(codeowner_list) {
+tidy_codeowners <- function(list) {
   purrr::imap_dfr(
-    codeowner_list,
+    list,
     \(co, repo_name) {
       if (is.null(co) || is.null(co$content)) {
         return(tibble::tibble(

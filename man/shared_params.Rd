@@ -20,6 +20,8 @@ the GitHub App.}
 \item{repos}{A character vector of repository names, or a data frame with a
 column named `repo_name`.
 If a data frame is supplied without this column, an error is raised.}
+
+\item{list}{A list produced from the corresponding get_ function.}
 }
 \description{
 Shared parameter documentation

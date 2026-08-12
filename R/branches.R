@@ -74,14 +74,10 @@ get_branches <- function(
 #' The function retrieves commit timestamps by calling [gh_get_commit()]
 #' internal helper.
 #'
-#' @param branch_list A named list of GitHub API responses returned by
-#'   [get_branches()]. Each element should contain branch metadata for a single
-#'   repository.
+#' @inheritParams shared_params list org token
 #' @param stale_after_days A number giving the threshold for marking a branch as
 #'   stale. Branches with no commits more recent than this number of days are
 #'   flagged as stale. The default is 90 days.
-#'
-#' @inheritParams shared_params token org
 #'
 #' @return
 #' A data frame with the following columns:
@@ -110,7 +106,7 @@ get_branches <- function(
 #'
 #' @export
 tidy_branches <- function(
-  branch_list,
+  list,
   org,
   stale_after_days = 90,
   token = get_token()
@@ -118,7 +114,7 @@ tidy_branches <- function(
   validate_org(org)
 
   purrr::imap_dfr(
-    branch_list,
+    list,
     \(branches, repo_name) {
       branch_names <- purrr::map_chr(
         branches,

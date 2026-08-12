@@ -4,10 +4,10 @@
 \alias{tidy_repos}
 \title{Convert repository list data into a tidy data frame}
 \usage{
-tidy_repos(result)
+tidy_repos(list)
 }
 \arguments{
-\item{result}{A list of repository objects returned by [get_repos].}
+\item{list}{A list produced from the corresponding get_ function.}
 }
 \value{
 A data frame with the following columns:

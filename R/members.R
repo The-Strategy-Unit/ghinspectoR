@@ -34,7 +34,7 @@ get_members <- function(
 #' @description
 #' Converts the list returned by [get_members] into a tidy data frame.
 #'
-#' @param list A list of user objects returned by [get_members]
+#' @inheritParams shared_params list
 #'
 #' @return data frame
 #'
@@ -86,7 +86,7 @@ get_owners <- function(
 #' @description
 #' Converts the list returned by [get_owners] into a tidy data frame.
 #'
-#' @param list A list of user objects
+#' @inheritParams shared_params list
 #'
 #' @return tibble
 #'

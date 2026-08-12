@@ -3,7 +3,7 @@
 #' @description
 #' Retrieves all repos of a GitHub organisation.
 #'
-#' @inheritParams shared_params token org repos
+#' @inheritParams shared_params token org
 #' @details
 #' The function queries the GitHub API endpoint:
 #' `GET /orgs/\{org\}/repos`
@@ -47,7 +47,7 @@ get_repos <- function(
 #' frame. Each row represents one repository and includes its name, visibility,
 #' archive status, issue count, URL, and creation timestamp.
 #'
-#' @param result A list of repository objects returned by [get_repos].
+#' @inheritParams shared_params list
 #'
 #' @details
 #' The function extracts selected fields from each repository object and
@@ -66,8 +66,8 @@ get_repos <- function(
 #' * [get_repos] for retrieving the raw repository data
 #'
 #' @export
-tidy_repos <- function(result) {
-  result |>
+tidy_repos <- function(list) {
+  list |>
     purrr::map(\(x) {
       tibble::tibble(
         repo_name = purrr::pluck(x, "name"),
@@ -123,7 +123,7 @@ get_repo_members <- function(
 #' Converts the raw collaborator lists returned by [get_repo_members] into
 #' a tidy tibble with one row per collaborator per repository.
 #'
-#' @param result A named list returned by [get_repo_members].
+#' @inheritParams shared_params list
 #'
 #' @examples
 #' \dontrun{
@@ -134,9 +134,9 @@ get_repo_members <- function(
 #'
 #' @export
 
-tidy_repo_members <- function(result) {
+tidy_repo_members <- function(list) {
   purrr::imap_dfr(
-    result,
+    list,
     \(users, repo) {
       purrr::map_dfr(
         users,

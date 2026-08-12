@@ -119,7 +119,6 @@ get_repo_members <- function(
 ) {
   validate_org(org)
 
-  # Normalise input to a character vector of repo names
   repo_names <- normalise_repo_names(repos)
 
   purrr::map(

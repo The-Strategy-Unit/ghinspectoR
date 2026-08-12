@@ -14,12 +14,12 @@
 #'
 #' @param token A GitHub installation access token or personal access token.
 #'   The default is `get_token()`.
+#' @param state String default is "open" for issues and GitHub API allows for
+#' options "closed" and "all".
 #'
 #' @details
 #' The function queries the GitHub API endpoint:
 #' `GET /repos/\{org\}/\{repo\}/issues`
-#'
-#' Only open issues are retrieved. Pagination is handled automatically.
 #'
 #' @return
 #' A named list where each element contains the raw issue objects for a single
@@ -34,16 +34,25 @@
 get_issues <- function(
   repos,
   org,
+  state = c("open", "closed", "all"),
   token = get_token()
 ) {
   validate_org(org)
 
-  # Normalise input to a character vector of repo names
+  state <- rlang::arg_match(state)
+
   repo_names <- normalise_repo_names(repos)
 
   purrr::map(
     repo_names,
-    \(repo) gh_get_issues(org, repo, token)
+    \(repo) {
+      gh_get_issues(
+        org = org,
+        repo = repo,
+        state = state,
+        token = token
+      )
+    }
   ) |>
     purrr::set_names(repo_names)
 }
@@ -96,6 +105,7 @@ tidy_issues <- function(issue_list) {
           repo_name = repo_name,
           issue_number = NA_integer_,
           issue_title = NA_character_,
+          issue_state = NA_character_,
           labels = NA_character_
         ))
       }
@@ -114,6 +124,12 @@ tidy_issues <- function(issue_list) {
           "title",
           .default = NA_character_
         ),
+        issue_state = purrr::map_chr(
+          issues,
+          purrr::pluck,
+          "state",
+          .default = NA_character_
+        ),
         labels = purrr::map_chr(
           issues,
           \(x) {
@@ -129,5 +145,125 @@ tidy_issues <- function(issue_list) {
         )
       )
     }
+  )
+}
+
+get_issue_fields <- function(
+  org,
+  token = get_token()
+) {
+  validate_org(org)
+  gh::gh(
+    "GET /orgs/{org}/issue-fields",
+    org = org,
+    .token = token
+  )
+}
+
+
+tidy_issue_fields <- function(result) {
+  result |>
+    purrr::map(\(x) {
+      options <- purrr::pluck(x, "options", .default = list())
+      tibble::tibble(
+        field_id = purrr::pluck(x, "id"),
+        field_name = purrr::pluck(x, "name"),
+        data_type = purrr::pluck(x, "data_type"),
+        description = purrr::pluck(x, "description", .default = NA_character_),
+        option_name = if (length(options) == 0) {
+          list(NA_character_)
+        } else {
+          list(purrr::map_chr(options, "name"))
+        }
+      )
+    }) |>
+    purrr::list_rbind() |>
+    tidyr::unnest(option_name)
+}
+
+
+get_issue_field_values <- function(issues, org, token = get_token()) {
+  validate_org(org)
+
+  issues <- issues |>
+    dplyr::filter(!is.na(issue_number))
+
+  purrr::pmap(
+    list(repo_name = issues$repo_name, issue_number = issues$issue_number),
+    \(repo_name, issue_number) {
+      list(
+        repo_name = repo_name,
+        issue_number = issue_number,
+        fields = gh_get_issue_field_values(
+          org = org,
+          repo = repo_name,
+          issue_number = issue_number,
+          token = token
+        )
+      )
+    }
+  )
+}
+
+tidy_issue_field_values <- function(issue_fields) {
+  issue_fields <- purrr::keep(issue_fields, \(x) length(x$fields) > 0)
+
+  purrr::map_dfr(
+    issue_fields,
+    \(issue) {
+      tibble::tibble(
+        repo_name = issue$repo_name,
+        issue_number = issue$issue_number,
+        field_id = purrr::map_int(issue$fields, "issue_field_id"),
+        field_name = purrr::map_chr(issue$fields, "issue_field_name"),
+        data_type = purrr::map_chr(issue$fields, "data_type"),
+        value = purrr::map_chr(
+          issue$fields,
+          \(x) {
+            if (!is.null(x$single_select_option)) {
+              x$single_select_option$name
+            } else {
+              as.character(x$value)
+            }
+          }
+        )
+      )
+    }
+  )
+}
+
+get_issue_field_names <- function(
+  org,
+  token = get_token()
+) {
+  validate_org(org)
+
+  gh::gh(
+    "GET /orgs/{org}/issue-fields",
+    org = org,
+    .token = token
+  )
+}
+
+tidy_issue_field_names <- function(result) {
+  tibble::tibble(
+    field_name = purrr::map_chr(
+      result,
+      purrr::pluck,
+      "name",
+      .default = NA_character_
+    ),
+    data_type = purrr::map_chr(
+      result,
+      purrr::pluck,
+      "data_type",
+      .default = NA_character_
+    ),
+    description = purrr::map_chr(
+      result,
+      purrr::pluck,
+      "description",
+      .default = NA_character_
+    )
   )
 }

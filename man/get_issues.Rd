@@ -4,7 +4,7 @@
 \alias{get_issues}
 \title{Retrieve issues for one or more GitHub repositories}
 \usage{
-get_issues(repos, org, token = get_token())
+get_issues(repos, org, state = c("open", "closed", "all"), token = get_token())
 }
 \arguments{
 \item{repos}{A character vector of repository names, or a data frame with a
@@ -12,6 +12,9 @@ column named `repo_name`.}
 
 \item{org}{A single character string giving the GitHub organisation or
 username that owns the repositories.}
+
+\item{state}{String default is "open" for issues and GitHub API allows for
+options "closed" and "all".}
 
 \item{token}{A GitHub installation access token or personal access token.
 The default is `get_token()`.}
@@ -29,8 +32,6 @@ responses, which can be converted into a tidy data frame using
 \details{
 The function queries the GitHub API endpoint:
 `GET /repos/\{org\}/\{repo\}/issues`
-
-Only open issues are retrieved. Pagination is handled automatically.
 }
 \seealso{
 * [tidy_techdebt_issues()] for filtering and tidying issue data

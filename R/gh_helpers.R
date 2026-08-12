@@ -194,6 +194,7 @@ gh_get_branches <- function(org, repo, token = get_token()) {
 #' @param org GitHub organisation or username.
 #' @param repo Repository name.
 #' @param token A GitHub installation access token or personal access token.
+#' @param state string default is "open" but can be "closed" or "all"
 #'
 #' @details
 #' The function queries the GitHub API endpoint:
@@ -209,15 +210,22 @@ gh_get_branches <- function(org, repo, token = get_token()) {
 #'
 #' @keywords internal
 #' @noRd
-gh_get_issues <- function(org, repo, token = get_token()) {
+gh_get_issues <- function(
+  org,
+  repo,
+  state = c("open", "closed", "all"),
+  token = get_token()
+) {
   validate_org(org)
   validate_repo(repo)
+
+  state <- rlang::arg_match(state)
 
   gh::gh(
     "GET /repos/{org}/{repo}/issues",
     org = org,
     repo = repo,
-    state = "open",
+    state = state,
     .per_page = 100,
     .limit = Inf,
     .token = token
@@ -311,7 +319,7 @@ gh_get_repo_members <- function(
   )
 }
 
-gh_get_issue_fields <- function(
+gh_get_issue_field_values <- function(
   org,
   repo,
   issue_number,

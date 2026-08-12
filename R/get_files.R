@@ -99,6 +99,9 @@ tidy_single_file <- function(file_raw, repo_name) {
 #' @param token A GitHub installation access token or personal access token.
 #' @param file_name string Detail the name of the file being retrieved and
 #' include the file extension, for example README.md or README.Rmd.
+#' @param try_common_locations If `TRUE` (the default), the function checks
+#'   common alternative locations (`.github/`, `docs/`, lowercase) in addition
+#'   to the exact path. Set to `FALSE` when the exact path is known.
 #'
 #' @return
 #' A named list where each element contains the raw API response for the file
@@ -121,7 +124,8 @@ get_files <- function(
   repos,
   org,
   file_name,
-  token = get_token()
+  token = get_token(),
+  try_common_locations = TRUE
 ) {
   validate_org(org)
   repo_names <- normalise_repo_names(repos)
@@ -133,7 +137,8 @@ get_files <- function(
         org = org,
         repo = repo,
         file_name = file_name,
-        token = token
+        token = token,
+        try_common_locations = try_common_locations
       )
     }
   ) |>

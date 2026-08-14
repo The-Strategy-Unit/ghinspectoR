@@ -50,8 +50,7 @@ get_single_file <- function(
 #' It extracts metadata such as file name, path, size, and SHA, and decodes the
 #' base64‑encoded file content.
 #'
-#' @inheritParams shared_params list
-#' @param repo_name The name of the repository the file was retrieved from.
+#' @inheritParams shared_params list repo
 #'
 #' @return
 #' A tibble containing metadata and decoded content for the file.
@@ -61,13 +60,13 @@ get_single_file <- function(
 #'
 #' @examples
 #' \dontrun{
-#' tidy_single_file(file_raw, repo_name = "my-repo")
+#' tidy_single_file(file_raw, repo = "my-repo")
 #' }
 #'
 #' @export
-tidy_single_file <- function(list, repo_name) {
+tidy_single_file <- function(list, repo) {
   tibble::tibble(
-    repo_name = repo_name,
+    repo = repo,
     file_name = list$name %||% NA_character_,
     path = list$path %||% NA_character_,
     sha = list$sha %||% NA_character_,

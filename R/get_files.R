@@ -8,8 +8,7 @@
 #' Used in the [get_files()] function that retrieves files across many
 #' repositories
 #'
-#' @param repo A single repository name.
-#' @inheritParams shared_params token org
+#' @inheritParams shared_params token org repo
 #' @param file_name string Detail the name of the file being retrieved and
 #' include the file extension, for example README.md or README.Rmd.
 #'

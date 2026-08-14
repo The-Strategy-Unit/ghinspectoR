@@ -11,6 +11,7 @@
 #'   column named `repo_name`.
 #'   If a data frame is supplied without this column, an error is raised.
 #' @param list A list produced from the corresponding get_ function.
+#' @param repo A single repository name.
 #'
 #'
 #' @keywords internal

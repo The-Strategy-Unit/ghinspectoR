@@ -21,7 +21,7 @@ validate_org <- function(org) {
 #' @description
 #' Checks that the `repo` argument is a single character string.
 #'
-#' @param repo A repository name.
+#' @inheritParams shared_params repo
 #'
 #' @return Nothing. Throws an error if validation fails.
 #'

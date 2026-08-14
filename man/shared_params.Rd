@@ -22,6 +22,8 @@ column named `repo_name`.
 If a data frame is supplied without this column, an error is raised.}
 
 \item{list}{A list produced from the corresponding get_ function.}
+
+\item{repo}{A single repository name.}
 }
 \description{
 Shared parameter documentation

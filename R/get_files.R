@@ -8,9 +8,7 @@
 #' Used in the [get_files()] function that retrieves files across many
 #' repositories
 #'
-#' @inheritParams shared_params token org repo
-#' @param file_name string Detail the name of the file being retrieved and
-#' include the file extension, for example README.md or README.Rmd.
+#' @inheritParams shared_params token org repo file_name
 #'
 #' @return
 #' A list containing the raw GitHub API response for the requested file.
@@ -91,9 +89,7 @@ tidy_single_file <- function(list, repo_name) {
 #' data frame containing a `repo_name` column. The function returns a named list
 #' of raw GitHub API responses.
 #'
-#' @inheritParams shared_params token org repos
-#' @param file_name string Detail the name of the file being retrieved and
-#' include the file extension, for example README.md or README.Rmd.
+#' @inheritParams shared_params token org repos file_name
 #'
 #' @return
 #' A named list where each element contains the raw API response for the file

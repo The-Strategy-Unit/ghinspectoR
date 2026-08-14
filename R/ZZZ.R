@@ -14,6 +14,8 @@
 #' @param repo A single repository name.
 #' @param env_var Character. The name of the keyring entry and/or
 #'   environment variable holding the GitHub PAT. Defaults to `"GH_PAT"`.
+#' @param file_name string Detail the name of the file being retrieved and
+#' include the file extension, for example README.md or README.Rmd.
 #'
 #'
 #' @keywords internal

@@ -74,8 +74,7 @@ validate_team <- function(team) {
 #' * `requested_path` — the path where the file was found.
 #'
 #' @param path File name to search for (for example `"CODEOWNERS"`).
-#' @param file_name File name to search for (for example `"CODEOWNERS"`).
-#' @inheritParams shared_params token org repo
+#' @inheritParams shared_params token org repo file_name
 #' @param try_common_locations If `TRUE` (the default), the function checks
 #'   common alternative locations (`.github/`, `docs/`, lowercase) in addition
 #'   to the exact path. Set to `FALSE` when the exact path is known.

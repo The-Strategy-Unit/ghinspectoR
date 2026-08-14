@@ -20,7 +20,7 @@ appropriate credential type for interactive Shiny apps where each user
 should authenticate with, and act as, their own GitHub identity.
 }
 \details{
-This function calls [connectapi::get_oauth_content_credentials()] to obtain
+This function calls [connectapi::get_oauth_user_credentials()] to obtain
 a token scoped to the currently logged-in viewer of a Shiny app deployed
 to Posit Connect, using a GitHub OAuth integration configured for
 per-user (viewer) authentication.
@@ -36,24 +36,24 @@ at the package or application level. A typical pattern is to wrap the
 call in a `reactive()`:
 
 ```r
-server <- function(input, output, session) \{
-  token <- reactive(\{
+server <- function(input, output, session) {
+  token <- reactive({
     get_connect_user_token(session)
-  \})
-\}
+  })
+}
 ```
 }
 \examples{
 \dontrun{
-server <- function(input, output, session) \{
-  token <- reactive(\{
+server <- function(input, output, session) {
+  token <- reactive({
     get_connect_user_token(session)
-  \})
+  })
 
-  output$repos <- renderTable(\{
+  output$repos <- renderTable({
     get_repos(org = "my-org", token = token())
-  \})
-\}
+  })
+}
 }
 
 }

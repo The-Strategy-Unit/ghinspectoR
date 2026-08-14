@@ -148,7 +148,7 @@ get_connect_app_token <- function() {
 #' @return A character string containing the viewer's OAuth access token.
 #'
 #' @details
-#' This function calls [connectapi::get_oauth_content_credentials()] to obtain
+#' This function calls [connectapi::get_oauth_user_credentials()] to obtain
 #' a token scoped to the currently logged-in viewer of a Shiny app deployed
 #' to Posit Connect, using a GitHub OAuth integration configured for
 #' per-user (viewer) authentication.
@@ -164,26 +164,26 @@ get_connect_app_token <- function() {
 #' call in a `reactive()`:
 #'
 #' ```r
-#' server <- function(input, output, session) \{
-#'   token <- reactive(\{
+#' server <- function(input, output, session) {
+#'   token <- reactive({
 #'     get_connect_user_token(session)
-#'   \})
-#' \}
+#'   })
+#' }
 #' ```
 #'
 #' @seealso [get_token()], [get_local_token()], [get_connect_app_token()]
 #'
 #' @examples
 #' \dontrun{
-#' server <- function(input, output, session) \{
-#'   token <- reactive(\{
+#' server <- function(input, output, session) {
+#'   token <- reactive({
 #'     get_connect_user_token(session)
-#'   \})
+#'   })
 #'
-#'   output$repos <- renderTable(\{
+#'   output$repos <- renderTable({
 #'     get_repos(org = "my-org", token = token())
-#'   \})
-#' \}
+#'   })
+#' }
 #' }
 #'
 #' @export
@@ -231,9 +231,14 @@ get_connect_user_token <- function(session) {
 #' }
 #'
 #' @export
-get_token <- function(env_var = "GH_PAT") {
-  if (nzchar(Sys.getenv("CONNECT_SERVER"))) {
-    return(get_connect_app_token())
+get_token <- function() {
+  if (
+    identical(Sys.getenv("POSIT_PRODUCT"), "CONNECT") &&
+      nzchar(Sys.getenv("CONNECT_SERVER"))
+  ) {
+    client <- connectapi::connect()
+    connectapi::get_oauth_content_credentials(client)
+  } else {
+    get_local_token()
   }
-  get_local_token(env_var)
 }

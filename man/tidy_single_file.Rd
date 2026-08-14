@@ -4,12 +4,12 @@
 \alias{tidy_single_file}
 \title{Tidy a single file retrieved from a GitHub repository}
 \usage{
-tidy_single_file(file_raw, repo_name)
+tidy_single_file(list, repo)
 }
 \arguments{
-\item{file_raw}{A raw file object returned by `get_file()`.}
+\item{list}{A list produced from the corresponding get_ function.}
 
-\item{repo_name}{The name of the repository the file was retrieved from.}
+\item{repo}{A single repository name.}
 }
 \value{
 A tibble containing metadata and decoded content for the file.
@@ -21,7 +21,7 @@ base64‑encoded file content.
 }
 \examples{
 \dontrun{
-tidy_single_file(file_raw, repo_name = "my-repo")
+tidy_single_file(file_raw, repo = "my-repo")
 }
 
 }

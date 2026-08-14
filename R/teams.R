@@ -3,9 +3,7 @@
 #' @description
 #' Retrieves teams (grouped members) within a GitHub organisation.
 #'
-#' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_token()`
-#' @param org GitHub organisation name.
+#' @inheritParams shared_params token org
 #'
 #' @examples
 #' \dontrun{
@@ -33,7 +31,7 @@ get_teams <- function(org, token = get_token()) {
 #' Converts team information in list returned by [get_teams] into a tidy
 #' data frame.
 #'
-#' @param team_list A list of team objects.
+#' @inheritParams shared_params list
 #'
 #' @examples
 #' \dontrun{
@@ -43,9 +41,9 @@ get_teams <- function(org, token = get_token()) {
 #' @return data frame
 #'
 #' @export
-tidy_teams <- function(team_list) {
+tidy_teams <- function(list) {
   purrr::map_dfr(
-    team_list,
+    list,
     \(team) {
       tibble::tibble(
         team_name = purrr::pluck(team, "name", .default = NA_character_),
@@ -66,9 +64,7 @@ tidy_teams <- function(team_list) {
 #' @description
 #' Retrieves all members of a specific GitHub organisation team.
 #'
-#' @param org GitHub organisation name.
-#' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_token()`
+#' @inheritParams shared_params token org
 #' @param teams usually from [get_teams] and [tidy_teams] functions containing
 #' `team_slug` column
 #'
@@ -106,7 +102,7 @@ get_team_members <- function(teams, org, token = get_token()) {
 #' Converts team information in list returned by [get_team_members] into a tidy
 #' data frame.
 #'
-#' @param team_members_list A named list of raw team membership responses
+#' @inheritParams shared_params list
 #'
 #' @return
 #' A tibble with two columns:
@@ -125,9 +121,9 @@ get_team_members <- function(teams, org, token = get_token()) {
 #' [gh_get_team_members(), get_team_members()]
 #'
 #' @export
-tidy_team_members <- function(team_members_list) {
+tidy_team_members <- function(list) {
   purrr::imap_dfr(
-    team_members_list,
+    list,
     \(members, team_slug) {
       if (length(members) == 0) {
         tibble::tibble(team_slug = team_slug, login = NA_character_)

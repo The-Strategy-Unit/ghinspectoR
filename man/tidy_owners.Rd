@@ -7,7 +7,7 @@
 tidy_owners(list)
 }
 \arguments{
-\item{list}{A list of user objects}
+\item{list}{A list produced from the corresponding get_ function.}
 }
 \value{
 tibble

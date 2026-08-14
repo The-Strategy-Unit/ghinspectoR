@@ -8,8 +8,7 @@ get_token(env_var = "GH_PAT")
 }
 \arguments{
 \item{env_var}{Character. The name of the keyring entry and/or
-environment variable to use when falling back to [get_local_token()].
-Defaults to `"GH_PAT"`. Ignored when running on Posit Connect.}
+environment variable holding the GitHub PAT. Defaults to `"GH_PAT"`.}
 }
 \value{
 A character string containing a GitHub token.

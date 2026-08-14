@@ -11,11 +11,7 @@
 #' CODEOWNERS file exists for a repository, the corresponding list element is
 #' `NULL`.
 #'
-#' @param repos A character vector of repository names, or a data frame with a
-#'   column named `repo_name`.
-#' @param org GitHub organisation or username.
-#' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_token()`
+#' @inheritParams shared_params token org repos
 #'
 #' @return
 #' A named list where each element contains:
@@ -65,7 +61,7 @@ get_codeowners <- function(
 #' * `codeowners_path = NA`
 #' * `codeowners_text = NA`
 #'
-#' @param codeowner_list A named list returned by [get_codeowners].
+#' @inheritParams shared_params list
 #'
 #' @return
 #' A data frame with columns:
@@ -81,9 +77,9 @@ get_codeowners <- function(
 #' }
 #'
 #' @export
-tidy_codeowners <- function(codeowner_list) {
+tidy_codeowners <- function(list) {
   purrr::imap_dfr(
-    codeowner_list,
+    list,
     \(co, repo_name) {
       if (is.null(co) || is.null(co$content)) {
         return(tibble::tibble(

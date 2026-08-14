@@ -4,7 +4,7 @@
 \alias{shared_params}
 \title{Shared parameter documentation}
 \usage{
-shared_params(org, limit, token, repos)
+shared_params()
 }
 \arguments{
 \item{org}{A single character string giving the GitHub organisation or
@@ -24,6 +24,9 @@ If a data frame is supplied without this column, an error is raised.}
 \item{list}{A list produced from the corresponding get_ function.}
 
 \item{repo}{A single repository name.}
+
+\item{env_var}{Character. The name of the keyring entry and/or
+environment variable holding the GitHub PAT. Defaults to `"GH_PAT"`.}
 }
 \description{
 Shared parameter documentation

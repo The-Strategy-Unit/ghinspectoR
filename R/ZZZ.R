@@ -12,7 +12,9 @@
 #'   If a data frame is supplied without this column, an error is raised.
 #' @param list A list produced from the corresponding get_ function.
 #' @param repo A single repository name.
+#' @param env_var Character. The name of the keyring entry and/or
+#'   environment variable holding the GitHub PAT. Defaults to `"GH_PAT"`.
 #'
 #'
 #' @keywords internal
-shared_params <- function(org, limit, token, repos) {}
+shared_params <- function() {}

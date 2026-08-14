@@ -11,9 +11,6 @@ get_members(org, token = get_token(), limit = Inf)
 
 \item{token}{A GitHub installation access token or personal access token.
 Default uses `get_token()`}
-
-\item{limit}{The maximum number members to retrieve. The default is
-`Inf`, which retrieves all.}
 }
 \value{
 list user objects returned by the GitHub API.

@@ -1,6 +1,6 @@
 #' Code used in multiple functions to ensure repository names are normalised
 #'
-#' @param repos vector
+#' @inheritParams shared_params repos
 #'
 #' @return message
 #'

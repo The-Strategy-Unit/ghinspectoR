@@ -8,7 +8,13 @@ a named list of raw GitHub API responses.
 ## Usage
 
 ``` r
-get_files(repos, org, file_name, token = get_token())
+get_files(
+  repos,
+  org,
+  file_name,
+  token = get_token(),
+  try_common_locations = TRUE
+)
 ```
 
 ## Arguments
@@ -30,6 +36,12 @@ get_files(repos, org, file_name, token = get_token())
 - token:
 
   A GitHub installation access token or personal access token.
+
+- try_common_locations:
+
+  If \`TRUE\` (the default), the function checks common alternative
+  locations (\`.github/\`, \`docs/\`, lowercase) in addition to the
+  exact path. Set to \`FALSE\` when the exact path is known.
 
 ## Value
 

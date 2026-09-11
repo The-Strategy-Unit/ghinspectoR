@@ -53,7 +53,13 @@ of raw GitHub API responses.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_files</span><span class="op">(</span><span class="va">repos</span>, <span class="va">org</span>, <span class="va">file_name</span>, token <span class="op">=</span> <span class="fu"><a href="get_token.html">get_token</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_files</span><span class="op">(</span></span>
+<span>  <span class="va">repos</span>,</span>
+<span>  <span class="va">org</span>,</span>
+<span>  <span class="va">file_name</span>,</span>
+<span>  token <span class="op">=</span> <span class="fu"><a href="get_token.html">get_token</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  try_common_locations <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -76,6 +82,12 @@ include the file extension, for example README.md or README.Rmd.</p></dd>
 
 <dt id="arg-token">token<a class="anchor" aria-label="anchor" href="#arg-token"></a></dt>
 <dd><p>A GitHub installation access token or personal access token.</p></dd>
+
+
+<dt id="arg-try-common-locations">try_common_locations<a class="anchor" aria-label="anchor" href="#arg-try-common-locations"></a></dt>
+<dd><p>If `TRUE` (the default), the function checks
+common alternative locations (`.github/`, `docs/`, lowercase) in addition
+to the exact path. Set to `FALSE` when the exact path is known.</p></dd>
 
 </dl></div>
     <div class="section level2">

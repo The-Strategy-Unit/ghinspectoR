@@ -21,8 +21,8 @@ get_members(org, token = get_token(), limit = Inf)
 
 - limit:
 
-  The maximum number members to retrieve. The default is \`Inf\`, which
-  retrieves all.
+  The maximum number of repositories to retrieve. The default is
+  \`Inf\`, which retrieves all available repositories.
 
 ## Value
 

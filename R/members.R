@@ -6,8 +6,7 @@
 #' @param org GitHub organisation name.
 #' @param token A GitHub installation access token or personal access token.
 #' Default uses `get_token()`
-#' @param limit  The maximum number members to retrieve. The default is
-#'   `Inf`, which retrieves all.
+#' @inheritParams get_repos limit
 #'
 #' @return list user objects returned by the GitHub API.
 #' @seealso [tidy_members()]

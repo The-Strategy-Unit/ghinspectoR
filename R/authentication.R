@@ -8,8 +8,7 @@
 #' `usethis::create_github_token()`), and finally an environment variable
 #' (typically set in `.Renviron`).
 #'
-#' @param env_var Character. The name of the keyring entry and/or
-#'   environment variable holding the GitHub PAT. Defaults to `"GH_PAT"`.
+#' @inheritParams shared_params env_var
 #'
 #' @return A character string containing the GitHub PAT.
 #'
@@ -201,9 +200,7 @@ get_connect_user_token <- function(session) {
 #' (content) credential via [get_connect_app_token()]. Outside of Posit
 #' Connect, it returns a locally stored credential via [get_local_token()].
 #'
-#' @param env_var Character. The name of the keyring entry and/or
-#'   environment variable to use when falling back to [get_local_token()].
-#'   Defaults to `"GH_PAT"`. Ignored when running on Posit Connect.
+#' @inheritParams shared_params env_var
 #'
 #' @return A character string containing a GitHub token.
 #'

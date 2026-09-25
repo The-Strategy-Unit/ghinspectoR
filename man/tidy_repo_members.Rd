@@ -4,10 +4,10 @@
 \alias{tidy_repo_members}
 \title{Tidy collaborator data for one or more repositories}
 \usage{
-tidy_repo_members(result)
+tidy_repo_members(list)
 }
 \arguments{
-\item{result}{A named list returned by [get_repo_members].}
+\item{list}{A list produced from the corresponding get_ function.}
 }
 \value{
 A tibble containing repository names, logins, and role names.

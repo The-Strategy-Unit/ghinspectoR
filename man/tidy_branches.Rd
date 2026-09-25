@@ -4,15 +4,13 @@
 \alias{tidy_branches}
 \title{Convert branch list data into a tidy data frame}
 \usage{
-tidy_branches(branch_list, org, stale_after_days = 90, token = get_token())
+tidy_branches(list, org, stale_after_days = 90, token = get_token())
 }
 \arguments{
-\item{branch_list}{A named list of GitHub API responses returned by
-[get_branches()]. Each element should contain branch metadata for a single
-repository.}
+\item{list}{A list produced from the corresponding get_ function.}
 
 \item{org}{A single character string giving the GitHub organisation or
-username that owns the repositories.}
+username whose repositories should be retrieved.}
 
 \item{stale_after_days}{A number giving the threshold for marking a branch as
 stale. Branches with no commits more recent than this number of days are

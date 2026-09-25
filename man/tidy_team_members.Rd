@@ -4,10 +4,10 @@
 \alias{tidy_team_members}
 \title{Tidy team membership data returned from the GitHub API}
 \usage{
-tidy_team_members(team_members_list)
+tidy_team_members(list)
 }
 \arguments{
-\item{team_members_list}{A named list of raw team membership responses}
+\item{list}{A list produced from the corresponding get_ function.}
 }
 \value{
 A tibble with two columns:

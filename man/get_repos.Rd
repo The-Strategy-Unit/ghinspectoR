@@ -9,9 +9,6 @@ get_repos(org, token = get_token(), limit = Inf)
 \arguments{
 \item{org}{A single character string giving the GitHub organisation or
 username whose repositories should be retrieved.}
-
-\item{limit}{The maximum number of repositories to retrieve. The default is
-`Inf`, which retrieves all available repositories.}
 }
 \value{
 list of repository objects returned by the GitHub API.

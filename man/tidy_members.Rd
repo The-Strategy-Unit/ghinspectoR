@@ -7,7 +7,7 @@
 tidy_members(list)
 }
 \arguments{
-\item{list}{A list of user objects returned by [get_members]}
+\item{list}{A list produced from the corresponding get_ function.}
 }
 \value{
 data frame

@@ -4,10 +4,10 @@
 \alias{tidy_issues}
 \title{Convert raw issue data into a tidy data frame}
 \usage{
-tidy_issues(issue_list)
+tidy_issues(list)
 }
 \arguments{
-\item{issue_list}{A named list of issue objects returned by [get_issues()].}
+\item{list}{A list produced from the corresponding get_ function.}
 }
 \value{
 A data frame with the following columns:

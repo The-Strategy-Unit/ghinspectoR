@@ -4,10 +4,10 @@
 \alias{tidy_files}
 \title{Tidy multiple files retrieved from GitHub repositories}
 \usage{
-tidy_files(files_list)
+tidy_files(list)
 }
 \arguments{
-\item{files_list}{A named list of raw file objects returned by `get_files()`.}
+\item{list}{A list produced from the corresponding get_ function.}
 }
 \value{
 A tibble containing metadata and decoded content for each file across all

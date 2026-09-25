@@ -20,7 +20,7 @@ get_teams <- function(org, token = get_token()) {
     "GET /orgs/{org}/teams",
     org = org,
     .limit = Inf,
-    token = token
+    .token = token
   )
 }
 
@@ -91,7 +91,7 @@ get_team_members <- function(teams, org, token = get_token()) {
 
   purrr::map(
     team_slugs,
-    \(team_slug) gh_get_team_members(org, team_slug, "all", token)
+    \(team_slug) gh_get_team_members(org, team_slug, token)
   ) |>
     rlang::set_names(team_slugs)
 }
@@ -129,7 +129,7 @@ tidy_team_members <- function(list) {
         tibble::tibble(team_slug = team_slug, login = NA_character_)
       } else {
         tibble::tibble(
-          team_slug = rep(team_slug, length(members)),
+          team_slug = team_slug,
           login = purrr::map_chr(members, "login")
         )
       }

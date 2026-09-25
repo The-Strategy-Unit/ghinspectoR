@@ -111,7 +111,8 @@ get_files <- function(
   repos,
   org,
   file_name,
-  token = get_token()
+  token = get_token(),
+  try_common_locations = TRUE
 ) {
   validate_org(org)
   repo_names <- normalise_repo_names(repos)
@@ -123,7 +124,8 @@ get_files <- function(
         org = org,
         repo = repo,
         file_name = file_name,
-        token = token
+        token = token,
+        try_common_locations = try_common_locations
       )
     }
   ) |>

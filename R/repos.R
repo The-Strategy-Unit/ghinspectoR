@@ -3,12 +3,7 @@
 #' @description
 #' Retrieves all repos of a GitHub organisation.
 #'
-#' @param org A single character string giving the GitHub organisation or
-#'   username whose repositories should be retrieved.
-#'
-#' @param limit The maximum number of repositories to retrieve. The default is
-#'   `Inf`, which retrieves all available repositories.
-#'
+#' @inheritParams shared_params token org limit
 #' @details
 #' The function queries the GitHub API endpoint:
 #' `GET /orgs/\{org\}/repos`
@@ -30,9 +25,9 @@
 #'
 #' @export
 get_repos <- function(
-  org,
-  token = get_token(),
-  limit = Inf
+    org,
+    token = get_token(),
+    limit = Inf
 ) {
   validate_org(org)
 
@@ -94,10 +89,7 @@ tidy_repos <- function(result) {
 #' Retrieves the list of collaborators for one or more repositories within
 #' a GitHub organisation.
 #'
-#' @param org GitHub organisation name.
-#' @param repos One or more repository names.
-#' @param token A GitHub installation access token or personal access token.
-#'   Default uses `get_token()`.
+#' @inheritParams shared_params token org repos
 #'
 #' @examples
 #' \dontrun{
@@ -109,9 +101,9 @@ tidy_repos <- function(result) {
 #' @export
 
 get_repo_members <- function(
-  org,
-  repos,
-  token = get_token()
+    org,
+    repos,
+    token = get_token()
 ) {
   validate_org(org)
 
@@ -132,7 +124,7 @@ get_repo_members <- function(
 #' Converts the raw collaborator lists returned by [get_repo_members] into
 #' a tidy tibble with one row per collaborator per repository.
 #'
-#' @param result A named list returned by [get_repo_members].
+#' @inheritParams shared_params list
 #'
 #' @examples
 #' \dontrun{
@@ -143,9 +135,9 @@ get_repo_members <- function(
 #'
 #' @export
 
-tidy_repo_members <- function(result) {
+tidy_repo_members <- function(list) {
   purrr::imap_dfr(
-    result,
+    list,
     \(users, repo) {
       purrr::map_dfr(
         users,

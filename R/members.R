@@ -3,9 +3,7 @@
 #' @description
 #' Retrieves all members of a GitHub organisation.
 #'
-#' @param org GitHub organisation name.
-#' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_token()`
+#' @inheritParams shared_params token org limit
 #'
 #' @return list user objects returned by the GitHub API.
 #' @seealso [tidy_members()]
@@ -17,9 +15,9 @@
 #'
 #' @export
 get_members <- function(
-  org,
-  token = get_token(),
-  limit = Inf
+    org,
+    token = get_token(),
+    limit = Inf
 ) {
   validate_org(org)
 
@@ -36,7 +34,7 @@ get_members <- function(
 #' @description
 #' Converts the list returned by [get_members] into a tidy data frame.
 #'
-#' @param list A list of user objects returned by [get_members]
+#' @inheritParams shared_params list
 #'
 #' @return data frame
 #'
@@ -59,10 +57,7 @@ tidy_members <- function(list) {
 #' @description
 #' Retrieves users with the `admin` role (organisation owners).
 #'
-#' @param org GitHub organisation name.
-#' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_token()`
-#'
+#' @inheritParams shared_params token org
 #' @return list user objects returned by the GitHub API.
 #'
 #' @examples
@@ -72,8 +67,8 @@ tidy_members <- function(list) {
 #'
 #' @export
 get_owners <- function(
-  org,
-  token = get_token()
+    org,
+    token = get_token()
 ) {
   validate_org(org)
 
@@ -91,7 +86,7 @@ get_owners <- function(
 #' @description
 #' Converts the list returned by [get_owners] into a tidy data frame.
 #'
-#' @param list A list of user objects
+#' @inheritParams shared_params list
 #'
 #' @return tibble
 #'
@@ -117,9 +112,7 @@ tidy_owners <- function(list) {
 #' collaborators have access to specific repositories but are not organisation
 #' members.
 #'
-#' @param org GitHub organisation name.
-#' @param token A GitHub installation access token or personal access token.
-#' Default uses `get_token()`
+#' @inheritParams shared_params token org
 #'
 #' @return list user objects returned by the GitHub API.
 #'
@@ -130,8 +123,8 @@ tidy_owners <- function(list) {
 #'
 #' @export
 get_outside_collaborators <- function(
-  org,
-  token = get_token()
+    org,
+    token = get_token()
 ) {
   validate_org(org)
 
@@ -152,7 +145,7 @@ get_outside_collaborators <- function(
 #' Outside collaborators are users who have access to specific repositories but
 #' are not members of the organisation.
 #'
-#' @param list A list of user objects returned by [get_outside_collaborators]
+#' @inheritParams shared_params list
 #'
 #' @return tibble
 #'
@@ -178,8 +171,7 @@ tidy_outside_collaborators <- function(list) {
 #'
 #' @param usernames Character vector of GitHub usernames (e.g. from
 #'   `tidy_members()$login`).
-#' @param token A GitHub installation access token or personal access token.
-#'   Default uses `get_token()`.
+#' @inheritParams shared_params token
 #'
 #' @return A list of user objects returned by the GitHub API, one per
 #'   username.

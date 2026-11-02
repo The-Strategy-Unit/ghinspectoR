@@ -2,9 +2,6 @@
 
 ## All functions
 
-- [`add_member_details()`](https://the-strategy-unit.github.io/ghinspectoR/reference/add_member_details.md)
-  : Details for members with GitHub profile information and members of
-  organisation
 - [`get_branches()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_branches.md)
   : Retrieve branch information from GitHub repositories
 - [`get_codeowners()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_codeowners.md)
@@ -19,6 +16,8 @@
   : Retrieve issues for one or more GitHub repositories
 - [`get_local_token()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_local_token.md)
   : Get a GitHub token for local development
+- [`get_member_details()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_member_details.md)
+  : Retrieve member details
 - [`get_members()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_members.md)
   : Retrieve organisation members
 - [`get_outside_collaborators()`](https://the-strategy-unit.github.io/ghinspectoR/reference/get_outside_collaborators.md)
@@ -45,6 +44,8 @@
   : Tidy multiple files retrieved from GitHub repositories
 - [`tidy_issues()`](https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_issues.md)
   : Convert raw issue data into a tidy data frame
+- [`tidy_member_details()`](https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_member_details.md)
+  : Tidy member details
 - [`tidy_members()`](https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_members.md)
   : Convert organisation member list into a tidy data frame
 - [`tidy_outside_collaborators()`](https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_outside_collaborators.md)

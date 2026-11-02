@@ -9,7 +9,7 @@ Connect, it returns a locally stored credential via
 ## Usage
 
 ``` r
-get_token(env_var = "GH_PAT")
+get_token()
 ```
 
 ## Arguments

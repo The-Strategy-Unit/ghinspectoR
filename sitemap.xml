@@ -4,7 +4,6 @@
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/LICENSE.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/authors.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/index.html</loc></url>
-<url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/add_member_details.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_branches.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_codeowners.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_connect_app_token.html</loc></url>
@@ -12,6 +11,7 @@
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_files.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_issues.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_local_token.html</loc></url>
+<url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_member_details.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_members.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_outside_collaborators.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/get_owners.html</loc></url>
@@ -26,6 +26,7 @@
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_codeowners.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_files.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_issues.html</loc></url>
+<url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_member_details.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_members.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_outside_collaborators.html</loc></url>
 <url><loc>https://the-strategy-unit.github.io/ghinspectoR/reference/tidy_owners.html</loc></url>

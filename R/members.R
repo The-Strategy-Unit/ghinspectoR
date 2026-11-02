@@ -169,8 +169,7 @@ tidy_outside_collaborators <- function(list) {
 #' @description
 #' Retrieves details for multiple members of a GitHub organisation.
 #'
-#' @param usernames Character vector of GitHub usernames (e.g. from
-#'   `tidy_members()$login`).
+#' @param usernames Character vector of GitHub usernames
 #' @inheritParams shared_params token
 #'
 #' @return A list of user objects returned by the GitHub API, one per

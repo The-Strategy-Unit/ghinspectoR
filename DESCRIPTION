@@ -21,7 +21,6 @@ Imports:
     connectapi,
     dplyr,
     gh,
-    gitcreds,
     lubridate,
     purrr,
     rlang,

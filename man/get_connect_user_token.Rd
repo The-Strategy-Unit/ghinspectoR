@@ -36,24 +36,24 @@ at the package or application level. A typical pattern is to wrap the
 call in a `reactive()`:
 
 ```r
-server <- function(input, output, session) {
-  token <- reactive({
+server <- function(input, output, session) \{
+  token <- reactive(\{
     get_connect_user_token(session)
-  })
-}
+  \})
+\}
 ```
 }
 \examples{
 \dontrun{
-server <- function(input, output, session) {
-  token <- reactive({
+server <- function(input, output, session) \{
+  token <- reactive(\{
     get_connect_user_token(session)
-  })
+  \})
 
-  output$repos <- renderTable({
+  output$repos <- renderTable(\{
     get_repos(org = "my-org", token = token())
-  })
-}
+  \})
+\}
 }
 
 }

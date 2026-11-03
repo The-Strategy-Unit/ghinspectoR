@@ -7,7 +7,7 @@
 tidy_outside_collaborators(list)
 }
 \arguments{
-\item{list}{A list of user objects returned by [get_outside_collaborators]}
+\item{list}{A list produced from the corresponding get_ function.}
 }
 \value{
 tibble

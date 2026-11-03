@@ -11,14 +11,14 @@ done in downstream analysis.
 ## Usage
 
 ``` r
-tidy_issues(issue_list)
+tidy_issues(list)
 ```
 
 ## Arguments
 
-- issue_list:
+- list:
 
-  A named list of issue objects returned by \[get_issues()\].
+  A list produced from the corresponding get\_ function.
 
 ## Value
 

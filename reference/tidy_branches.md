@@ -11,20 +11,19 @@ internal helper.
 ## Usage
 
 ``` r
-tidy_branches(branch_list, org, stale_after_days = 90, token = get_token())
+tidy_branches(list, org, stale_after_days = 90, token = get_token())
 ```
 
 ## Arguments
 
-- branch_list:
+- list:
 
-  A named list of GitHub API responses returned by \[get_branches()\].
-  Each element should contain branch metadata for a single repository.
+  A list produced from the corresponding get\_ function.
 
 - org:
 
   A single character string giving the GitHub organisation or username
-  that owns the repositories.
+  whose repositories should be retrieved.
 
 - stale_after_days:
 

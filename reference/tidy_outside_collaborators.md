@@ -16,7 +16,7 @@ tidy_outside_collaborators(list)
 
 - list:
 
-  A list of user objects returned by \[get_outside_collaborators\]
+  A list produced from the corresponding get\_ function.
 
 ## Value
 

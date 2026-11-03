@@ -6,14 +6,14 @@ tibble.
 ## Usage
 
 ``` r
-tidy_files(files_list)
+tidy_files(list)
 ```
 
 ## Arguments
 
-- files_list:
+- list:
 
-  A named list of raw file objects returned by \`get_files()\`.
+  A list produced from the corresponding get\_ function.
 
 ## Value
 

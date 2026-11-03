@@ -5,14 +5,14 @@ Converts the list returned by \[get_codeowners\] into a tidy data frame.
 ## Usage
 
 ``` r
-tidy_codeowners(codeowner_list)
+tidy_codeowners(list)
 ```
 
 ## Arguments
 
-- codeowner_list:
+- list:
 
-  A named list returned by \[get_codeowners\].
+  A list produced from the corresponding get\_ function.
 
 ## Value
 

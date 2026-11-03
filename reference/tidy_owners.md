@@ -12,7 +12,7 @@ tidy_owners(list)
 
 - list:
 
-  A list of user objects
+  A list produced from the corresponding get\_ function.
 
 ## Value
 

@@ -39,8 +39,8 @@ function should be called fresh for each user/session rather than cached
 at the package or application level. A typical pattern is to wrap the
 call in a \`reactive()\`:
 
-“\`r server \<- function(input, output, session) token \<- reactive(
-get_connect_user_token(session) ) “\`
+“\`r server \<- function(input, output, session) { token \<- reactive({
+get_connect_user_token(session) }) } “\`
 
 ## See also
 

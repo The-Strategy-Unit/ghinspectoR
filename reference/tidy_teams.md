@@ -6,14 +6,14 @@ data frame.
 ## Usage
 
 ``` r
-tidy_teams(team_list)
+tidy_teams(list)
 ```
 
 ## Arguments
 
-- team_list:
+- list:
 
-  A list of team objects.
+  A list produced from the corresponding get\_ function.
 
 ## Value
 

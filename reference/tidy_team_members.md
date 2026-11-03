@@ -6,14 +6,14 @@ a tidy data frame.
 ## Usage
 
 ``` r
-tidy_team_members(team_members_list)
+tidy_team_members(list)
 ```
 
 ## Arguments
 
-- team_members_list:
+- list:
 
-  A named list of raw team membership responses
+  A list produced from the corresponding get\_ function.
 
 ## Value
 

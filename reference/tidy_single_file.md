@@ -7,18 +7,18 @@ the base64‑encoded file content.
 ## Usage
 
 ``` r
-tidy_single_file(file_raw, repo_name)
+tidy_single_file(list, repo)
 ```
 
 ## Arguments
 
-- file_raw:
+- list:
 
-  A raw file object returned by \`get_file()\`.
+  A list produced from the corresponding get\_ function.
 
-- repo_name:
+- repo:
 
-  The name of the repository the file was retrieved from.
+  A single repository name.
 
 ## Value
 
@@ -32,6 +32,6 @@ A tibble containing metadata and decoded content for the file.
 
 ``` r
 if (FALSE) { # \dontrun{
-tidy_single_file(file_raw, repo_name = "my-repo")
+tidy_single_file(file_raw, repo = "my-repo")
 } # }
 ```

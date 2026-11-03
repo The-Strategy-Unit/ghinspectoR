@@ -6,14 +6,14 @@ into a tidy tibble with one row per collaborator per repository.
 ## Usage
 
 ``` r
-tidy_repo_members(result)
+tidy_repo_members(list)
 ```
 
 ## Arguments
 
-- result:
+- list:
 
-  A named list returned by \[get_repo_members\].
+  A list produced from the corresponding get\_ function.
 
 ## Value
 

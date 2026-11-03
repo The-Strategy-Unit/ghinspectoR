@@ -12,7 +12,7 @@ tidy_members(list)
 
 - list:
 
-  A list of user objects returned by \[get_members\]
+  A list produced from the corresponding get\_ function.
 
 ## Value
 

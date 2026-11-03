@@ -1,7 +1,7 @@
 Package: ghinspectoR
 Type: Package
 Title: Function to assist with an audit of many repositories within a GitHub organisation account
-Version: 0.1.0
+Version: 0.0.0.9000
 Authors@R: c(
     person(
       "Zoë", "Turner",
